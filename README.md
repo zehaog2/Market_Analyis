@@ -4,18 +4,18 @@ Visualize market sentiment through Fear & Greed analysis. Track individual stock
 
 ## 🌟 Features
 
-- **📈 Enhanced Visualizations**: Beautiful dark-themed charts with trend analysis
-- **🎯 Smart Indicators**: Auto-detect support/resistance levels and inflection points
-- **📊 Multi-Level Analysis**: Analyze individual stocks, sectors, and industries
-- **🔄 Portfolio Integration**: Track your entire portfolio's sentiment
-- **⚡ Real-Time Data**: Powered by Yahoo Finance for up-to-date market data
+- Enhanced Visualizations**: Beautiful dark-themed charts with trend analysis
+- Smart Indicators**: Auto-detect support/resistance levels and inflection points
+- Multi-Level Analysis**: Analyze individual stocks, sectors, and industries
+- Portfolio Integration**: Track your entire portfolio's sentiment
+- Real-Time Data**: Powered by Yahoo Finance for up-to-date market data
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 
 ```bash
-pip install yfinance pandas numpy matplotlib seaborn requests beautifulsoup4 feedparser textblob reportlab schedule scipy
+pip3 install yfinance pandas numpy matplotlib seaborn requests beautifulsoup4 feedparser textblob reportlab schedule scipy
 ```
 
 ### Installation
@@ -211,59 +211,14 @@ The sentiment score (0-100) is calculated using:
 ## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request. Areas for improvement:
-- Additional technical indicators
-- More sector/industry mappings
-- Alternative data sources
-- Performance optimizations
-- UI improvements
-
-## 📝 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 🙏 Acknowledgments
-
-- Yahoo Finance for market data
-- The Python data science community
-- Inspired by CNN's Fear & Greed Index
+- Integration of EMA and order blocks
+- automized sector/industry mappings & dicionary updates
+- Alternative data sources (X, meta API)
+- Reduce clutter on support / resistance
 
 ## ⚠️ Disclaimer
 
-This tool is for educational and informational purposes only. It is not financial advice. Always do your own research and consult with financial professionals before making investment decisions.
+This tool is for educational and informational purposes only. It is not financial advice. Do your own research...
 
-## 🐛 Troubleshooting
-
-### Common Issues
-
-1. **"No module named 'yfinance'"**
-   ```bash
-   pip install yfinance
-   ```
-
-2. **"Cannot find config.json"**
-   - Run `python portfolio_manager.py` first to create it
-
-3. **Charts look empty**
-   - Some stocks may have limited data
-   - Try major stocks like AAPL, MSFT, SPY
-
-### Getting Help
-
-- Check existing [Issues](https://github.com/yourusername/fear-greed-tracker/issues)
-- Create a new issue with your error message
-- Include your Python version and OS
-
-## 🚀 Future Enhancements
-
-- [ ] Web dashboard interface
-- [ ] Email alerts for extreme fear/greed
-- [ ] Backtesting framework
-- [ ] Options flow integration
-- [ ] Crypto support
-- [ ] Mobile app
 
 ---
-
-Made with ❤️ by [Your Name]
-
-**Star ⭐ this repo if you find it useful!**

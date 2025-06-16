@@ -1,9 +1,3 @@
-#!/usr/bin/env python3
-"""
-Enhanced Fear & Greed Time Series Analysis
-Focuses on trend changes and inflection points for better trading decisions
-"""
-
 import yfinance as yf
 import pandas as pd
 import numpy as np
@@ -20,6 +14,7 @@ from scipy.signal import find_peaks
 from collections import Counter
 
 from fear_greed_timeseries import FearGreedTimeSeries
+from market_mapping import SECTOR_ETF_MAP, INDUSTRY_PEERS
 
 
 class FearGreedEnhanced(FearGreedTimeSeries):
@@ -30,6 +25,12 @@ class FearGreedEnhanced(FearGreedTimeSeries):
         self.smoothing_window = 10  # 10-day smoothing
         self.support_resistance_tolerance = 2  # ±2 points for level detection
         self.min_touches = 3  # Minimum touches for support/resistance
+        
+        # Ensure we have sector and industry data
+        if not hasattr(self, 'sector_etfs'):
+            self.sector_etfs = SECTOR_ETF_MAP
+        if not hasattr(self, 'industry_stocks'):
+            self.industry_stocks = INDUSTRY_PEERS
         
         # Override output directory
         self.output_dir = Path('fear_greed_enhanced')
@@ -156,7 +157,7 @@ class FearGreedEnhanced(FearGreedTimeSeries):
             window=self.smoothing_window, center=True).mean()
         
         # Fill NaN values at edges
-        smoothed = smoothed.fillna(method='bfill').fillna(method='ffill')
+        smoothed = smoothed.bfill().ffill()
         
         # Calculate trend strength for coloring
         slopes = self.calculate_trend_strength(smoothed)
@@ -378,6 +379,8 @@ def main():
                        help='Number of days to analyze (default: 180)')
     parser.add_argument('--portfolio', action='store_true',
                        help='Analyze only portfolio sectors/industries')
+    parser.add_argument('--show-portfolio', action='store_true',
+                       help='Show portfolio composition without generating charts')
     parser.add_argument('--sectors', nargs='+',
                        help='Specific sectors to analyze')
     parser.add_argument('--industries', nargs='+',
@@ -387,6 +390,39 @@ def main():
     
     # Initialize analyzer
     analyzer = FearGreedEnhanced(period_days=args.days)
+    
+    if args.show_portfolio:
+        # Just show portfolio composition
+        from stock_info_manager import StockInfoManager
+        info_manager = StockInfoManager()
+        
+        try:
+            with open('config.json', 'r') as f:
+                config = json.load(f)
+            portfolio_stocks = config['portfolio']['stocks']
+            
+            print("\n📊 Portfolio Composition:")
+            print("=" * 80)
+            for ticker in portfolio_stocks:
+                info = info_manager.get_info(ticker)
+                print(f"\n{ticker}:")
+                print(f"  Company: {info.get('company', 'Unknown')}")
+                print(f"  Sector: {info.get('sector', 'Unknown')}")
+                print(f"  Industry: {info.get('industry', 'Unknown')}")
+                print(f"  Peers: {', '.join(info.get('peers', []))}")
+            
+            # Show available mappings
+            print("\n📈 Available Sector ETFs:")
+            for sector in sorted(analyzer.sector_etfs.keys()):
+                print(f"  - {sector}")
+            
+            print("\n📊 Available Industries (first 20):")
+            for ind in sorted(list(analyzer.industry_stocks.keys())[:20]):
+                print(f"  - {ind}")
+                
+        except Exception as e:
+            print(f"Error: {e}")
+        return
     
     if args.portfolio:
         # Load portfolio and analyze only those sectors/industries
@@ -398,28 +434,80 @@ def main():
                 config = json.load(f)
             portfolio_stocks = config['portfolio']['stocks']
             
+            if not portfolio_stocks:
+                print("❌ No stocks found in portfolio")
+                return
+            
             sectors = set()
             industries = set()
             
+            print(f"\n📊 Analyzing portfolio: {', '.join(portfolio_stocks)}")
+            print("-" * 60)
+            
+            # Collect all unique sectors and industries
             for ticker in portfolio_stocks:
                 info = info_manager.get_info(ticker)
-                sectors.add(info.get('sector'))
-                industries.add(info.get('industry'))
+                sector = info.get('sector')
+                industry = info.get('industry')
+                
+                if sector and sector != 'Unknown':
+                    sectors.add(sector)
+                    print(f"{ticker}: {sector} sector")
+                
+                if industry and industry != 'Unknown':
+                    industries.add(industry)
+                    print(f"{ticker}: {industry} industry")
+            
+            print(f"\n📈 Found {len(sectors)} unique sectors")
+            print(f"📊 Found {len(industries)} unique industries")
             
             # Generate charts for portfolio sectors
-            for sector in sectors:
+            print("\n🔍 Generating Sector Charts:")
+            for sector in sorted(sectors):
+                # Check both exact match and common variations
                 if sector in analyzer.sector_etfs:
                     analyzer.create_sector_chart(sector, analyzer.sector_etfs[sector])
+                else:
+                    print(f"  ⚠️  No ETF mapping found for sector: {sector}")
             
             # Generate charts for portfolio industries
-            for industry in industries:
-                for ind, stocks in analyzer.industry_stocks.items():
-                    if industry.lower() in ind.lower():
-                        analyzer.create_industry_chart(ind, stocks)
-                        break
+            print("\n🔍 Generating Industry Charts:")
+            for industry in sorted(industries):
+                found = False
+                # Try exact match first
+                if industry in analyzer.industry_stocks:
+                    analyzer.create_industry_chart(industry, analyzer.industry_stocks[industry])
+                    found = True
+                else:
+                    # Try fuzzy matching
+                    for ind, stocks in analyzer.industry_stocks.items():
+                        # More flexible matching
+                        if (industry.lower() == ind.lower() or
+                            industry.lower() in ind.lower() or
+                            ind.lower() in industry.lower() or
+                            # Handle special characters
+                            industry.replace('&', 'and').lower() in ind.replace('&', 'and').lower() or
+                            ind.replace('&', 'and').lower() in industry.replace('&', 'and').lower() or
+                            # Handle em dash vs regular dash
+                            industry.replace('—', '-').lower() in ind.replace('—', '-').lower() or
+                            ind.replace('—', '-').lower() in industry.replace('—', '-').lower()):
+                            
+                            analyzer.create_industry_chart(ind, stocks)
+                            found = True
+                            break
+                
+                if not found:
+                    print(f"  ⚠️  No data found for industry: {industry}")
+                    # Show similar industries
+                    similar = [ind for ind in analyzer.industry_stocks.keys() 
+                              if any(word in ind.lower() for word in industry.lower().split())]
+                    if similar:
+                        print(f"     Similar industries available: {', '.join(similar[:3])}")
         
         except Exception as e:
             print(f"Error loading portfolio: {e}")
+            import traceback
+            traceback.print_exc()
     
     elif args.sectors:
         # Analyze specific sectors

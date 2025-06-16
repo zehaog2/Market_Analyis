@@ -1,9 +1,3 @@
-#!/usr/bin/env python3
-"""
-Fear & Greed Time Series Analysis
-Creates individual time series charts for each sector and industry
-"""
-
 import yfinance as yf
 import pandas as pd
 import numpy as np
@@ -14,71 +8,17 @@ import argparse
 import json
 from pathlib import Path
 import warnings
+from market_mapping import SECTOR_ETF_MAP, INDUSTRY_PEERS
 warnings.filterwarnings('ignore')
 
 class FearGreedTimeSeries:
-    """Generate time series fear/greed charts for sectors and industries"""
     
     def __init__(self, period_days=180):
         self.period_days = period_days
         self.end_date = datetime.now()
         self.start_date = self.end_date - timedelta(days=period_days)
-        
-        # Sector ETFs
-        self.sector_etfs = {
-            'Technology': 'XLK',
-            'Financials': 'XLF',
-            'Healthcare': 'XLV',
-            'Consumer Discretionary': 'XLY',
-            'Industrials': 'XLI',
-            'Consumer Staples': 'XLP',
-            'Energy': 'XLE',
-            'Utilities': 'XLU',
-            'Real Estate': 'XLRE',
-            'Materials': 'XLB',
-            'Communications': 'XLC'
-        }
-        
-        # Industry representatives
-        self.industry_stocks = {
-            # Technology
-            'Semiconductors': ['NVDA', 'AMD', 'INTC', 'MU', 'QCOM'],
-            'Software': ['MSFT', 'CRM', 'ADBE', 'NOW', 'ORCL'],
-            'Internet': ['GOOGL', 'META', 'AMZN', 'NFLX', 'UBER'],
-            'Hardware': ['AAPL', 'DELL', 'HPQ', 'CSCO', 'IBM'],
-            'Cloud Computing': ['AMZN', 'MSFT', 'GOOGL', 'CRM', 'NOW'],
-            'Cybersecurity': ['CRWD', 'PANW', 'ZS', 'OKTA', 'S'],
-            
-            # Financials
-            'Banks': ['JPM', 'BAC', 'WFC', 'C', 'GS'],
-            'Insurance': ['BRK.B', 'UNH', 'AIG', 'MET', 'PRU'],
-            'Asset Management': ['BLK', 'MS', 'SCHW', 'CME', 'ICE'],
-            'Fintech': ['V', 'MA', 'PYPL', 'SQ', 'COIN'],
-            
-            # Healthcare
-            'Pharma': ['JNJ', 'PFE', 'MRK', 'ABBV', 'LLY'],
-            'Biotech': ['AMGN', 'GILD', 'BIIB', 'VRTX', 'REGN'],
-            'Medical Devices': ['ABT', 'MDT', 'TMO', 'DHR', 'SYK'],
-            'Healthcare Services': ['UNH', 'CVS', 'HUM', 'CI', 'ELV'],
-            
-            # Consumer
-            'Retail': ['WMT', 'AMZN', 'HD', 'COST', 'TGT'],
-            'E-commerce': ['AMZN', 'SHOP', 'EBAY', 'ETSY', 'W'],
-            'Auto': ['TSLA', 'F', 'GM', 'RIVN', 'NIO'],
-            'Restaurants': ['MCD', 'SBUX', 'CMG', 'YUM', 'DPZ'],
-            'Apparel': ['NKE', 'LULU', 'GPS', 'ROST', 'TJX'],
-            
-            # Industrials
-            'Aerospace': ['BA', 'LMT', 'RTX', 'NOC', 'GD'],
-            'Transport': ['UPS', 'FDX', 'UNP', 'CSX', 'DAL'],
-            'Machinery': ['CAT', 'DE', 'MMM', 'HON', 'EMR'],
-            'Defense': ['LMT', 'RTX', 'NOC', 'GD', 'LHX'],
-            
-            # Energy
-            'Oil & Gas': ['XOM', 'CVX', 'COP', 'SLB', 'OXY'],
-            'Renewable': ['NEE', 'ENPH', 'SEDG', 'RUN', 'PLUG'],
-            'Energy Services': ['SLB', 'HAL', 'BKR', 'FTI', 'NOV']
-        }
+        self.sector_etfs = SECTOR_ETF_MAP
+        self.industry_stocks = INDUSTRY_PEERS
         
         # Create output directory
         self.output_dir = Path('fear_greed_charts')

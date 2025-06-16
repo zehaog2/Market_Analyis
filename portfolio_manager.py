@@ -1,8 +1,3 @@
-#!/usr/bin/env python3
-"""
-Portfolio Manager - Easy utility to manage your stock portfolio
-"""
-
 import json
 import os
 from stock_info_manager import StockInfoManager

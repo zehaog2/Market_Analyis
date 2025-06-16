@@ -1,9 +1,10 @@
-import yfinance as yf
 import json
 import os
 from datetime import datetime
 import requests
 from typing import Dict, List, Optional
+import yfinance as yf
+from market_mapping import SECTOR_ETF_MAP, INDUSTRY_PEERS, SECTOR_LEADERS
 
 class StockInfoManager:
     """Manages stock information including company details, peers, and sector ETFs"""
@@ -12,20 +13,10 @@ class StockInfoManager:
         self.cache_file = cache_file
         self.stock_info = self.load_cache()
         
-        # Sector to ETF mapping
-        self.sector_etf_map = {
-            'Technology': 'XLK',
-            'Consumer Discretionary': 'XLY',
-            'Industrials': 'XLI',
-            'Health Care': 'XLV',
-            'Financials': 'XLF',
-            'Consumer Staples': 'XLP',
-            'Energy': 'XLE',
-            'Utilities': 'XLU',
-            'Real Estate': 'XLRE',
-            'Materials': 'XLB',
-            'Communication Services': 'XLC'
-        }
+        # Import from market_mappings.py
+        self.sector_etf_map = SECTOR_ETF_MAP
+        self.industry_peers = INDUSTRY_PEERS
+        self.sector_leaders = SECTOR_LEADERS
     
     def load_cache(self) -> Dict:
         """Load cached stock information"""
@@ -69,78 +60,17 @@ class StockInfoManager:
         """Find peer companies based on industry and sector"""
         peers = []
         
-        # First try to get peers from yfinance (if available)
-        try:
-            stock = yf.Ticker(ticker)
-            info = stock.info
-            yf_peers = info.get('companyOfficers', [])
-            # Note: yfinance doesn't always provide good peer data
-        except:
-            pass
-        
-        # Use a predefined list of common peers by industry
-        industry_peers = {
-    'Semiconductors': ['AMD', 'NVDA', 'INTC', 'MU', 'QCOM', 'AVGO', 'TSM', 'TXN', 'ADI', 'ON', 'MRVL'],
-
-    'Specialty Retail': ['BBY', 'CHWY', 'ULTA', 'DKS', 'AZO', 'ORLY', 'AAP', 'TSCO', 'RH'],
-
-    'Quantum Computing': ['IONQ', 'RGTI', 'ARQQ', 'QUBT', 'D-WAVE'],
-
-    'Computer Hardware': ['DELL', 'HPE', 'HPQ', 'NTAP', 'PSTG', 'WDC', 'STX', 'LOGI', 'SMCI'],
-
-    'EDA Software': ['CDNS', 'SNPS', 'ANSS', 'ALTI', 'KEYS'],
-
-    'Autonomous Vehicles': ['TSLA', 'RIVN', 'XPEV', 'NIO', 'LI', 'GOOGL', 'GM', 'F', 'MOBQ', 'WEJO'],
-
-    'EV Suppliers': ['ALB', 'LTHM', 'PLL', 'LAC', 'MP', 'FREY', 'SLDP'],
-
-    'Commercial Printing': ['RRD', 'DLX', 'QUAD', 'CMPR', 'VPRT'],
-
-    'Aerospace & Defense': ['BA', 'LMT', 'NOC', 'RTX', 'GD', 'TXT', 'HWM', 'AXON', 'SPCE', 'KTOS'],
-
-    'Software': ['MSFT', 'ORCL', 'CRM', 'ADBE', 'NOW', 'INTU', 'WDAY', 'SAP', 'U'],
-
-    'Cybersecurity': ['PANW', 'CRWD', 'ZS', 'OKTA', 'S', 'FTNT', 'TENB', 'CYBR'],
-
-    'Cloud Infrastructure': ['AMZN', 'MSFT', 'GOOGL', 'ORCL', 'IBM', 'SNOW'],
-
-    'Internet Retail': ['AMZN', 'EBAY', 'ETSY', 'W', 'CHWY', 'RVLV', 'OSTK', 'MELI'],
-
-    'Biotechnology': ['AMGN', 'GILD', 'BIIB', 'VRTX', 'REGN', 'ILMN', 'EXEL', 'ALNY', 'SGEN'],
-
-    'Banks': ['JPM', 'BAC', 'WFC', 'C', 'GS', 'MS', 'USB', 'PNC', 'TFC', 'FITB'],
-
-    'Oil & Gas': ['XOM', 'CVX', 'COP', 'SLB', 'EOG', 'MPC', 'PSX', 'VLO', 'HES'],
-
-    'AI/ML Platforms': ['PLTR', 'AI', 'SNOW', 'SPLK', 'DDOG', 'ZS', 'U', 'PATH', 'C3AI', 'LMND'],
-
-    'Robotics': ['IRBT', 'TER', 'ISRG', 'ROK', 'FANUY', 'ABB', 'OMRNY', 'NVTS', 'TTOO'],
-
-    'Nuclear Energy': ['SMR', 'BWXT', 'LTBR', 'LEU', 'URG', 'UEC', 'CCJ', 'DNN', 'NXE'],
-
-    'Meme Stocks': ['GME', 'AMC', 'BBBYQ', 'BB', 'CVNA', 'NKLA', 'RBLX', 'TRKA', 'COSM', 'AAL', 'SPCE']
-}
-
-        
+        # Use the imported industry peers from market_mappings.py
         # Get peers from industry mapping
-        for ind, peer_list in industry_peers.items():
+        for ind, peer_list in self.industry_peers.items():
             if ind.lower() in industry.lower() or industry.lower() in ind.lower():
                 peers.extend([p for p in peer_list if p != ticker])
                 break
         
-        # If not enough peers, add some based on sector
-        if len(peers) < min_peers:
-            sector_leaders = {
-                'Technology': ['AAPL', 'MSFT', 'GOOGL', 'META', 'NVDA'],
-                'Consumer Discretionary': ['AMZN', 'TSLA', 'HD', 'MCD', 'NKE'],
-                'Industrials': ['UNP', 'HON', 'CAT', 'BA', 'LMT'],
-                'Health Care': ['JNJ', 'UNH', 'PFE', 'TMO', 'ABT'],
-                'Financials': ['BRK.B', 'JPM', 'V', 'MA', 'BAC']
-            }
-            
-            if sector in sector_leaders:
-                additional_peers = [p for p in sector_leaders[sector] if p != ticker and p not in peers]
-                peers.extend(additional_peers)
+        # If not enough peers, add some based on sector leaders
+        if len(peers) < min_peers and sector in self.sector_leaders:
+            additional_peers = [p for p in self.sector_leaders[sector] if p != ticker and p not in peers]
+            peers.extend(additional_peers)
         
         # Remove duplicates and limit to requested number
         peers = list(dict.fromkeys(peers))[:min_peers * 2]  # Get extra in case some are invalid
@@ -235,27 +165,3 @@ class StockInfoManager:
         with open(filename, 'w') as f:
             json.dump(readable_data, f, indent=2)
         print(f"📄 Exported readable format to {filename}")
-
-
-# Example usage and testing
-if __name__ == "__main__":
-    # Initialize the manager
-    manager = StockInfoManager()
-    
-    # Example: Update a single ticker
-    print("Example 1: Adding a single ticker")
-    info = manager.update_ticker('AAPL')
-    print(json.dumps(info, indent=2))
-    
-    # Example: Update multiple tickers
-    print("\nExample 2: Updating portfolio")
-    portfolio = ['GME', 'INTC', 'QMCO', 'SMCI']
-    manager.update_portfolio(portfolio)
-    
-    # Example: Get info for a ticker (uses cache if available)
-    print("\nExample 3: Getting cached info")
-    gme_info = manager.get_info('GME')
-    print(f"GME peers: {gme_info['peers']}")
-    
-    # Export readable format
-    manager.export_readable()

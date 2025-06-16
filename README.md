@@ -7,7 +7,10 @@ I made this fear & greed tracker because tradingview's free plan doesn't have th
 - Smart Indicators**: Auto-detect support/resistance levels and inflection points
 - Multi-Level Analysis**: Analyze individual stocks, sectors, and industries
 
-
+Sample outputs:
+![sector_industrials_enhanced](https://github.com/user-attachments/assets/9757b99c-0903-481e-8f17-18b9b647ec77)
+![sector_technology_enhanced](https://github.com/user-attachments/assets/403da781-ba91-4640-b81a-a21fb16370bf)
+![industry_semiconductors_enhanced](https://github.com/user-attachments/assets/e2a7f429-95db-4f54-8705-e85edc439f6c)
 
 ### Usage
 

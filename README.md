@@ -140,7 +140,6 @@ The sentiment score (0-100) is calculated using: (adjust weight to your own liki
 
 Contributions are welcome! Please feel free to submit a Pull Request. Areas for improvement:
 - Integration of EMA and order blocks
-- automized sector/industry mappings & dicionary updates
 - Alternative data sources (X, meta API)
 - Reduce clutter on support / resistance
 

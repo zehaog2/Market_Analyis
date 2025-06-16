@@ -1,0 +1,92 @@
+{
+  "GME": {
+    "Company": "GameStop Corp.",
+    "Industry": "Specialty Retail",
+    "Sector": "Consumer Cyclical",
+    "Peers": "BBY, CHWY, ULTA, DKS, AZO",
+    "Sector ETF": "SPY",
+    "Market Cap": "$9,904,018,432",
+    "Exchange": "NYQ",
+    "Last Updated": "2025-06-15T12:52:46.589342"
+  },
+  "INTC": {
+    "Company": "Intel Corporation",
+    "Industry": "Semiconductors",
+    "Sector": "Technology",
+    "Peers": "AMD, NVDA, MU, QCOM, AVGO",
+    "Sector ETF": "XLK",
+    "Market Cap": "$87,850,672,128",
+    "Exchange": "NMS",
+    "Last Updated": "2025-06-15T12:52:53.962038"
+  },
+  "QMCO": {
+    "Company": "Quantum Corporation",
+    "Industry": "Computer Hardware",
+    "Sector": "Technology",
+    "Peers": "DELL, HPE, HPQ, NTAP, PSTG",
+    "Sector ETF": "XLK",
+    "Market Cap": "$69,080,608",
+    "Exchange": "NGM",
+    "Last Updated": "2025-06-15T12:52:50.676624"
+  },
+  "SMCI": {
+    "Company": "Super Micro Computer, Inc.",
+    "Industry": "Computer Hardware",
+    "Sector": "Technology",
+    "Peers": "DELL, HPE, HPQ, NTAP, PSTG",
+    "Sector ETF": "XLK",
+    "Market Cap": "$24,803,756,032",
+    "Exchange": "NMS",
+    "Last Updated": "2025-06-15T12:52:50.110936"
+  },
+  "AUR": {
+    "Company": "Aurora Innovation, Inc.",
+    "Industry": "Information Technology Services",
+    "Sector": "Technology",
+    "Peers": "AAPL, MSFT, GOOGL, META, NVDA",
+    "Sector ETF": "XLK",
+    "Market Cap": "$9,658,030,080",
+    "Exchange": "NMS",
+    "Last Updated": "2025-06-15T12:52:47.754738"
+  },
+  "CMPR": {
+    "Company": "Cimpress plc",
+    "Industry": "Specialty Business Services",
+    "Sector": "Industrials",
+    "Peers": "UNP, HON, CAT, BA, LMT",
+    "Sector ETF": "XLI",
+    "Market Cap": "$1,069,788,416",
+    "Exchange": "NMS",
+    "Last Updated": "2025-06-15T12:52:48.870641"
+  },
+  "SVCO": {
+    "Company": "Silvaco Group, Inc.",
+    "Industry": "Software - Application",
+    "Sector": "Technology",
+    "Peers": "MSFT, ORCL, CRM, ADBE, NOW",
+    "Sector ETF": "XLK",
+    "Market Cap": "$136,055,792",
+    "Exchange": "NMS",
+    "Last Updated": "2025-06-15T12:52:51.807295"
+  },
+  "KSCP": {
+    "Company": "Knightscope, Inc.",
+    "Industry": "Security & Protection Services",
+    "Sector": "Industrials",
+    "Peers": "UNP, HON, CAT, BA, LMT",
+    "Sector ETF": "XLI",
+    "Market Cap": "$38,232,760",
+    "Exchange": "NCM",
+    "Last Updated": "2025-06-15T12:52:52.706771"
+  },
+  "AAPL": {
+    "Company": "Apple Inc.",
+    "Industry": "Consumer Electronics",
+    "Sector": "Technology",
+    "Peers": "MSFT, GOOGL, META, NVDA",
+    "Sector ETF": "XLK",
+    "Market Cap": "$2,934,137,946,112",
+    "Exchange": "NMS",
+    "Last Updated": "2025-06-15T13:50:32.583579"
+  }
+}

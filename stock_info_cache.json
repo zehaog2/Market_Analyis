@@ -1,0 +1,181 @@
+{
+  "GME": {
+    "company": "GameStop Corp.",
+    "industry": "Specialty Retail",
+    "sector": "Consumer Cyclical",
+    "peers": [
+      "BBY",
+      "CHWY",
+      "ULTA",
+      "DKS",
+      "AZO"
+    ],
+    "sector_etf": "SPY",
+    "market_cap": 9904018432,
+    "exchange": "NYQ",
+    "last_updated": "2025-06-15T12:52:46.589342"
+  },
+  "INTC": {
+    "company": "Intel Corporation",
+    "industry": "Semiconductors",
+    "sector": "Technology",
+    "peers": [
+      "AMD",
+      "NVDA",
+      "MU",
+      "QCOM",
+      "AVGO"
+    ],
+    "sector_etf": "XLK",
+    "market_cap": 87850672128,
+    "exchange": "NMS",
+    "last_updated": "2025-06-15T12:52:53.962038"
+  },
+  "QMCO": {
+    "company": "Quantum Corporation",
+    "industry": "Computer Hardware",
+    "sector": "Technology",
+    "peers": [
+      "DELL",
+      "HPE",
+      "HPQ",
+      "NTAP",
+      "PSTG"
+    ],
+    "sector_etf": "XLK",
+    "market_cap": 69080608,
+    "exchange": "NGM",
+    "last_updated": "2025-06-15T12:52:50.676624"
+  },
+  "SMCI": {
+    "company": "Super Micro Computer, Inc.",
+    "industry": "Computer Hardware",
+    "sector": "Technology",
+    "peers": [
+      "DELL",
+      "HPE",
+      "HPQ",
+      "NTAP",
+      "PSTG"
+    ],
+    "sector_etf": "XLK",
+    "market_cap": 24803756032,
+    "exchange": "NMS",
+    "last_updated": "2025-06-15T12:52:50.110936"
+  },
+  "AUR": {
+    "company": "Aurora Innovation, Inc.",
+    "industry": "Information Technology Services",
+    "sector": "Technology",
+    "peers": [
+      "AAPL",
+      "MSFT",
+      "GOOGL",
+      "META",
+      "NVDA"
+    ],
+    "sector_etf": "XLK",
+    "market_cap": 9658030080,
+    "exchange": "NMS",
+    "last_updated": "2025-06-15T12:52:47.754738"
+  },
+  "CMPR": {
+    "company": "Cimpress plc",
+    "industry": "Specialty Business Services",
+    "sector": "Industrials",
+    "peers": [
+      "UNP",
+      "HON",
+      "CAT",
+      "BA",
+      "LMT"
+    ],
+    "sector_etf": "XLI",
+    "market_cap": 1069788416,
+    "exchange": "NMS",
+    "last_updated": "2025-06-15T12:52:48.870641"
+  },
+  "SVCO": {
+    "company": "Silvaco Group, Inc.",
+    "industry": "Software - Application",
+    "sector": "Technology",
+    "peers": [
+      "MSFT",
+      "ORCL",
+      "CRM",
+      "ADBE",
+      "NOW"
+    ],
+    "sector_etf": "XLK",
+    "market_cap": 136055792,
+    "exchange": "NMS",
+    "last_updated": "2025-06-15T12:52:51.807295"
+  },
+  "KSCP": {
+    "company": "Knightscope, Inc.",
+    "industry": "Security & Protection Services",
+    "sector": "Industrials",
+    "peers": [
+      "UNP",
+      "HON",
+      "CAT",
+      "BA",
+      "LMT"
+    ],
+    "sector_etf": "XLI",
+    "market_cap": 38232760,
+    "exchange": "NCM",
+    "last_updated": "2025-06-15T12:52:52.706771"
+  },
+  "AAPL": {
+    "company": "Apple Inc.",
+    "industry": "Consumer Electronics",
+    "sector": "Technology",
+    "peers": [
+      "MSFT",
+      "GOOGL",
+      "META",
+      "NVDA"
+    ],
+    "sector_etf": "XLK",
+    "market_cap": 2934137946112,
+    "exchange": "NMS",
+    "last_updated": "2025-06-15T13:50:32.583579"
+  },
+  "APPL": {
+    "company": "APPL",
+    "industry": "Unknown",
+    "sector": "Unknown",
+    "peers": [],
+    "sector_etf": "SPY",
+    "market_cap": 0,
+    "exchange": "YHD",
+    "last_updated": "2025-06-15T13:53:16.246025"
+  },
+  "MSFT": {
+    "company": "Microsoft Corporation",
+    "industry": "Software - Infrastructure",
+    "sector": "Technology",
+    "peers": [
+      "ORCL",
+      "CRM",
+      "ADBE",
+      "NOW",
+      "INTU"
+    ],
+    "sector_etf": "XLK",
+    "market_cap": 3530159292416,
+    "exchange": "NMS",
+    "last_updated": "2025-06-15T13:53:17.408263"
+  },
+  "GOOGL": {
+    "company": "Alphabet Inc.",
+    "industry": "Internet Content & Information",
+    "sector": "Communication Services",
+    "peers": [],
+    "sector_etf": "XLC",
+    "market_cap": 2126188118016,
+    "exchange": "NMS",
+    "last_updated": "2025-06-15T13:53:17.615309"
+  }
+}

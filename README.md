@@ -1,31 +1,15 @@
 # 📊 Fear & Greed Tracker
 
-Visualize market sentiment through Fear & Greed analysis. Track individual stocks, sectors, and industries with advanced technical indicators to identify optimal entry and exit points.
+I made this fear & greed tracker because tradingview's free plan doesn't have this. Also added some scripts for specific lookups.
 
 ## 🌟 Features
 
-- Enhanced Visualizations**: Beautiful dark-themed charts with trend analysis
 - Smart Indicators**: Auto-detect support/resistance levels and inflection points
 - Multi-Level Analysis**: Analyze individual stocks, sectors, and industries
-- Portfolio Integration**: Track your entire portfolio's sentiment
-- Real-Time Data**: Powered by Yahoo Finance for up-to-date market data
 
-## 🚀 Quick Start
 
-### Prerequisites
 
-```bash
-pip3 install yfinance pandas numpy matplotlib seaborn requests beautifulsoup4 feedparser textblob reportlab schedule scipy
-```
-
-### Installation
-
-```bash
-git clone https://github.com/yourusername/fear-greed-tracker.git
-cd fear-greed-tracker
-```
-
-### Basic Usage
+### Usage
 
 1. **Analyze Individual Stocks** (Interactive Mode):
 ```bash
@@ -89,45 +73,6 @@ python fear_greed_enhanced.py --sectors Technology Financials
 python fear_greed_enhanced.py --days 90 --portfolio
 ```
 
-## 📊 Understanding the Charts
-
-### Visual Elements
-
-- **📊 Faded Bars**: Daily sentiment (30% opacity for context)
-- **📈 Colored Trend Line**: Smoothed sentiment trend
-  - Green = Rising sentiment
-  - Red = Falling sentiment
-  - Darker color = Stronger momentum
-- **🔴 Support Lines**: Red dashed lines where sentiment often bounces up
-- **🟢 Resistance Lines**: Green dashed lines where sentiment often reverses down
-- **🔺 Green Triangles**: Potential buying opportunities (sentiment bottoms)
-- **🔻 Red Triangles**: Potential selling opportunities (sentiment tops)
-- **🟡 Yellow Dots**: Neutral sentiment crossings
-- **⬜ Gray Boxes**: Consolidation zones (markets deciding direction)
-
-### Numbers on Support/Resistance Lines
-
-The numbers show how many times sentiment bounced at that level:
-- `3` = Minimum (3 bounces)
-- `5` = Strong level (5 bounces)
-- `7+` = Very strong level
-
-Higher numbers = more reliable levels
-
-### How to Trade with These Charts
-
-**Buy Signals**:
-- Sentiment in extreme fear (< 30) starting to rise
-- Green triangle appears after extended red period
-- Break above resistance line with high touch count
-- Trend line turns from red to green
-
-**Sell Signals**:
-- Sentiment in extreme greed (> 70) starting to fall
-- Red triangle appears after extended green period
-- Break below support line with high touch count
-- Trend line turns from green to red
-
 ## 📁 File Structure
 
 ```
@@ -145,26 +90,6 @@ Output folders:
 ├── fear_greed_enhanced/     # Sector/industry charts
 └── stock_info_cache.json    # Cached stock data
 ```
-
-## 🎯 Example Workflow
-
-```bash
-# 1. Set up your portfolio
-python portfolio_manager.py
-> Choose option 2 (Add ticker)
-> Enter: AAPL MSFT NVDA TSLA
-
-# 2. Analyze your portfolio sectors
-python fear_greed_enhanced.py --portfolio
-
-# 3. Deep dive into specific stocks
-python stock_fear_greed.py
-> Enter: AAPL NVDA
-
-# 4. Check sector rotation opportunities
-python fear_greed_enhanced.py --sectors Technology Financials Healthcare
-```
-
 ## 🔧 Configuration
 
 ### Customizing Analysis Periods
@@ -175,7 +100,7 @@ python stock_fear_greed.py AAPL --days 90    # 3 months
 python stock_fear_greed.py AAPL --days 365   # 1 year
 ```
 
-### Creating a Watchlist
+### Watchlist Lookup
 
 Create a text file with one ticker per line:
 ```
@@ -194,9 +119,9 @@ python stock_fear_greed.py --watchlist watchlist.txt
 
 ## 📈 Technical Details
 
-### Fear & Greed Calculation
+### Maths
 
-The sentiment score (0-100) is calculated using:
+The sentiment score (0-100) is calculated using: (adjust weight to your own liking please)
 - **Price Momentum** (40%): Recent price performance
 - **RSI** (30%): Relative Strength Index
 - **Volume Analysis** (20%): Volume vs average
@@ -208,7 +133,7 @@ The sentiment score (0-100) is calculated using:
 - **Sector ETFs**: SPDR Sector ETFs (XLK, XLF, XLV, etc.)
 - **Updates**: Real-time during market hours
 
-## 🤝 Contributing
+## Improvements I am working on
 
 Contributions are welcome! Please feel free to submit a Pull Request. Areas for improvement:
 - Integration of EMA and order blocks
@@ -216,9 +141,8 @@ Contributions are welcome! Please feel free to submit a Pull Request. Areas for 
 - Alternative data sources (X, meta API)
 - Reduce clutter on support / resistance
 
-## ⚠️ Disclaimer
+## Disclaimer
 
-This tool is for educational and informational purposes only. It is not financial advice. Do your own research...
-
+This tool is for educational and informational purposes only. It is not financial advice. Do your own research... 
 
 ---

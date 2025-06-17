@@ -9,8 +9,9 @@ I made this fear & greed tracker because tradingview's free plan doesn't have th
 
 Sample outputs:
 ![sector_industrials_enhanced](https://github.com/user-attachments/assets/9757b99c-0903-481e-8f17-18b9b647ec77)
-![sector_technology_enhanced](https://github.com/user-attachments/assets/403da781-ba91-4640-b81a-a21fb16370bf)
-![industry_semiconductors_enhanced](https://github.com/user-attachments/assets/e2a7f429-95db-4f54-8705-e85edc439f6c)
+<img width="1851" alt="Screenshot 2025-06-17 at 11 42 12 AM" src="https://github.com/user-attachments/assets/c9c90459-302d-4376-9ef5-26c1a8b6be24" />
+<img width="1851" alt="Screenshot 2025-06-17 at 11 42 12 AM" src="https://github.com/user-attachments/assets/c9c90459-302d-4376-9ef5-26c1a8b6be24" />
+
 
 ### Usage
 

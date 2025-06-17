@@ -30,22 +30,19 @@ python portfolio_manager.py
 python fear_greed_enhanced.py --portfolio
 ```
 
-## 📖 Detailed Usage
-
-### Individual Stock Analysis
+## 📖 Quick Start
 
 ```bash
-# Interactive mode (recommended)
-python stock_fear_greed.py
+# General charts based on portfolio (with different timeframe)
+python3 fear_greed_enhanced.py --portfolio
+python3 fear_greed_enhanced.py —days 90
 
-# Command line mode
-python stock_fear_greed.py AAPL TSLA GOOGL
+Run Script for all sectors:
+python3 fear_greed_timeseries.py --sectors-only
+python3 fear_greed_timeseries.py --industries-only
 
-# Custom time period (default: 180 days)
-python stock_fear_greed.py AAPL --days 90
-
-# From watchlist file
-python stock_fear_greed.py --watchlist my_stocks.txt
+#news sentiment summary for portfolio
+python3 stock_scraper_upgraded.py
 ```
 
 ### Portfolio Management
@@ -54,26 +51,10 @@ python stock_fear_greed.py --watchlist my_stocks.txt
 # Interactive portfolio manager
 python portfolio_manager.py
 
-# Command line
+# examples:
 python portfolio_manager.py add AAPL MSFT
-python portfolio_manager.py remove GME
+python portfolio_manager.py remove AMZN
 python portfolio_manager.py list
-```
-
-### Sector & Industry Analysis
-
-```bash
-# Analyze all sectors and industries
-python fear_greed_enhanced.py
-
-# Analyze only your portfolio's sectors
-python fear_greed_enhanced.py --portfolio
-
-# Specific sectors
-python fear_greed_enhanced.py --sectors Technology Financials
-
-# Different time periods
-python fear_greed_enhanced.py --days 90 --portfolio
 ```
 
 ## 📁 File Structure

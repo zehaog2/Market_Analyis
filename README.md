@@ -37,7 +37,7 @@ python fear_greed_enhanced.py --portfolio
 python3 fear_greed_enhanced.py --portfolio
 python3 fear_greed_enhanced.py —days 90
 
-Run Script for all sectors:
+#Run Script for all sectors:
 python3 fear_greed_timeseries.py --sectors-only
 python3 fear_greed_timeseries.py --industries-only
 

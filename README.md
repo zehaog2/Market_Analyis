@@ -10,8 +10,6 @@ I made this fear & greed tracker because tradingview's free plan doesn't have th
 Sample outputs:
 ![sector_industrials_enhanced](https://github.com/user-attachments/assets/9757b99c-0903-481e-8f17-18b9b647ec77)
 <img width="1851" alt="Screenshot 2025-06-17 at 11 42 12 AM" src="https://github.com/user-attachments/assets/c9c90459-302d-4376-9ef5-26c1a8b6be24" />
-<img width="1851" alt="Screenshot 2025-06-17 at 11 42 12 AM" src="https://github.com/user-attachments/assets/c9c90459-302d-4376-9ef5-26c1a8b6be24" />
-
 
 ### Usage
 
@@ -44,6 +42,18 @@ python3 fear_greed_timeseries.py --industries-only
 
 #news sentiment summary for portfolio
 python3 stock_scraper_upgraded.py
+
+python3 sector_fear_greed_dashboard.py
+python3 sector_fear_greed_dashboard.py --continue-on-error
+
+python3 industry_lookup_tool.py
+# Search Directly
+python3 industry_lookup_tool.py --industry "Semiconductors"
+# search indirectly
+python industry_lookup_tool.py --search "software"
+# custom
+python industry_lookup_tool.py --industry "Banks" --days 90
+
 ```
 
 ### Portfolio Management

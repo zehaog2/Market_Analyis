@@ -2,6 +2,7 @@
 
 I made this fear & greed tracker because tradingview's free plan doesn't have this. Also added some scripts for specific lookups.
 
+The stock_corr script does exactly as the name suggests.
 ## 🌟 Features
 
 - Smart Indicators**: Auto-detect support/resistance levels and inflection points

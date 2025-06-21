@@ -11,6 +11,8 @@ The stock_corr script does exactly as the name suggests.
 Sample outputs:
 ![sector_industrials_enhanced](https://github.com/user-attachments/assets/9757b99c-0903-481e-8f17-18b9b647ec77)
 <img width="1851" alt="Screenshot 2025-06-17 at 11 42 12 AM" src="https://github.com/user-attachments/assets/c9c90459-302d-4376-9ef5-26c1a8b6be24" />
+[portfolio_correlation_matrix_3y_20250621.pdf](https://github.com/user-attachments/files/20847600/portfolio_correlation_matrix_3y_20250621.pdf)
+
 
 ### Usage
 

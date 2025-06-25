@@ -8,9 +8,11 @@ Price > EMA50: price vs trend, breakout/confirmation check
 Step: 
 Relative Volume = Today's Vol / avg(daily vol over past 30 days)
 Relative Volume (interval = 1day) > 1.2
-Reuires a 20% increase in activity
+Requires a 20% increase in activity
 
-
+Optional:
+Relative Volume at Time = current vol / SMA(vol, N periods)
+Use when volume patterns don't vary much intraday
 
 Step: 
 Manual Order block confirmations

@@ -2,6 +2,8 @@
 
 EMA10 > EMA20 > EMA50: geometry-of-averages check, a "stacked" trend
 
+Price < EMA50: confirms price has not cleared long term trend
+
 Price > EMA50: price vs trend, breakout/confirmation check
 
 

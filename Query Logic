@@ -10,9 +10,18 @@ Relative Volume = Today's Vol / avg(daily vol over past 30 days)
 Relative Volume (interval = 1day) > 1.2
 Requires a 20% increase in activity
 
+Volume-Weighted Avg Price < Price
+
+Shows that today’s activity is skewed to buys—institutions often chase prices above VWAP. It confirms the EMAs (10/20/50) stack isn’t just a fluke but is backed by real money flow.
+Optional:
+Volume-Weighted Moving Avg (20) < Price
+weights by volume instead of decay
+Gives you a trend line that reacts to where big blocks traded. A breakout above VWMA tells you the big players are on board.
+
 Optional:
 Relative Volume at Time = current vol / SMA(vol, N periods)
 Use when volume patterns don't vary much intraday
+
 
 Step: 
 Manual Order block confirmations

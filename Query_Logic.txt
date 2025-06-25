@@ -1,11 +1,16 @@
 # TradingView Stock Query Logic
 
-Step1: 
 EMA10 > EMA20 > EMA50: geometry-of-averages check, a "stacked" trend
 
 Price > EMA50: price vs trend, breakout/confirmation check
 
-Step: 
+
+30 < RSI <70
+just bullish enough
+
+MACD Line > Signal Line OR MACD His > 0
+bullish momentum OR positive momentum crossover
+
 Relative Volume = Today's Vol / avg(daily vol over past 30 days)
 Relative Volume (interval = 1day) > 1.2
 Requires a 20% increase in activity
@@ -21,6 +26,11 @@ Gives you a trend line that reacts to where big blocks traded. A breakout above 
 Optional:
 Relative Volume at Time = current vol / SMA(vol, N periods)
 Use when volume patterns don't vary much intraday
+
+
+Average True Range
+
+
 
 
 Step: 

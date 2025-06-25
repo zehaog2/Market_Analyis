@@ -1,0 +1,19 @@
+# TradingView Stock Query Logic
+
+Step1: 
+EMA10 > EMA20 > EMA50: geometry-of-averages check, a "stacked" trend
+
+Price > EMA50: price vs trend, breakout/confirmation check
+
+Step: 
+Relative Volume = Today's Vol / avg(daily vol over past 30 days)
+Relative Volume (interval = 1day) > 1.2
+Reuires a 20% increase in activity
+
+
+
+Step: 
+Manual Order block confirmations
+
+
+Price > EMA50: price vs trend, breakout/confirmation check

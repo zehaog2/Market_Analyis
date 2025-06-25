@@ -6,16 +6,25 @@ Price < EMA50: confirms price has not cleared long term trend
 
 Price > EMA50: price vs trend, breakout/confirmation check
 
+Volatility Squeeze:
+ATR(14) < SMA(ATR(14) ,14)
+picks up periods of unusually low ATR
 
-30 < RSI <70
-just bullish enough
+Range Contraction:
+Perf. 5D between -1% <-> 1%
+moving tightly this week
 
-MACD Line > Signal Line OR MACD His > 0
-bullish momentum OR positive momentum crossover
+
+
+40 < RSI < 60
+  just juicy enough
+
+MACD < 0, BUT:
+MUST be rising; ready to cross over 0
 
 Relative Volume = Today's Vol / avg(daily vol over past 30 days)
-Relative Volume (interval = 1day) > 1.2
-Requires a 20% increase in activity
+Relative Volume (interval = 1day) < 1
+  ensures volume is subdued as the pattern builds
 
 Volume-Weighted Avg Price < Price
 

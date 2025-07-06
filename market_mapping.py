@@ -1,4 +1,13 @@
 # Sector to ETF mapping - Standard 11 SPDR Sector ETFs
+'''
+import yfinance as yf
+import pandas as pd
+
+# Load S&P 500 companies (contains tickers + sectors)
+SP500_URL = 'https://datahub.io/core/s-and-p-500-companies/r/constituents.csv'
+df_sp500 = pd.read_csv(SP500_URL)
+'''
+
 SECTOR_ETF_MAP = {
     'Technology': 'XLK',
     'Financial Services': 'XLF',
@@ -11,7 +20,6 @@ SECTOR_ETF_MAP = {
     'Real Estate': 'XLRE',
     'Basic Materials': 'XLB',
     'Communication Services': 'XLC',
-
     'Financials': 'XLF',
     'Health Care': 'XLV',
     'Consumer Discretionary': 'XLY',
@@ -20,31 +28,44 @@ SECTOR_ETF_MAP = {
 }
 
 SECTOR_LEADERS = {
-    'Technology': ['AAPL', 'MSFT', 'NVDA', 'GOOGL', 'META'],
-    'Financial Services': ['BRK.B', 'JPM', 'V', 'MA', 'BAC'],
-    'Healthcare': ['UNH', 'JNJ', 'LLY', 'PFE', 'ABBV'],
-    'Consumer Cyclical': ['AMZN', 'TSLA', 'HD', 'MCD', 'NKE'],
-    'Industrials': ['CAT', 'UNP', 'HON', 'BA', 'LMT'],
-    'Consumer Defensive': ['WMT', 'PG', 'KO', 'PEP', 'COST'],
-    'Energy': ['XOM', 'CVX', 'COP', 'SLB', 'EOG'],
-    'Utilities': ['NEE', 'DUK', 'SO', 'D', 'AEP'],
-    'Real Estate': ['AMT', 'PLD', 'CCI', 'EQIX', 'PSA'],
-    'Basic Materials': ['LIN', 'SHW', 'APD', 'FCX', 'NEM'],
-    'Communication Services': ['GOOGL', 'META', 'DIS', 'NFLX', 'CMCSA'],
-    
-    # Alternative names for compatibility
-    'Financials': ['BRK.B', 'JPM', 'V', 'MA', 'BAC'],
-    'Health Care': ['UNH', 'JNJ', 'LLY', 'PFE', 'ABBV'],
-    'Consumer Discretionary': ['AMZN', 'TSLA', 'HD', 'MCD', 'NKE'],
-    'Consumer Staples': ['WMT', 'PG', 'KO', 'PEP', 'COST'],
-    'Materials': ['LIN', 'SHW', 'APD', 'FCX', 'NEM']
+    'Technology': ['AAPL', 'MSFT', 'NVDA', 'GOOGL', 'META', 'AMD','AVGO','ORCL','CRM'],
+    'Financial Services': ['BRK.B', 'JPM', 'V', 'MA', 'BAC','MS'],
+    'Healthcare': ['LLY', 'JNJ', 'UNH', 'MRK', 'ABBV', 'TMO'],
+    'Consumer Cyclical': ['AMZN', 'TSLA', 'HD', 'MCD', 'NKE', 'LOW','SBUX'],
+    'Industrials': ['CAT', 'UNP', 'HON', 'BA', 'LMT', 'RTX','GE','UPS','HON'],
+    'Consumer Defensive': ['WMT', 'PG', 'KO', 'PM','PEP', 'COST','CL'],
+    'Energy': ['XOM', 'CVX', 'COP', 'SLB', 'EOG','BP','MPC'],
+    'Utilities': ['NEE', 'DUK', 'SO', 'D', 'AEP','SRE'],
+    'Real Estate': ['AMT', 'PLD', 'CCI', 'EQIX', 'PSA','SPG'],
+    'Basic Materials': ['LIN', 'SHW', 'APD', 'FCX', 'NEM','DD','ECL'],
+    'Communication Services': ['T', 'VZ', 'AZ', 'DIS', 'NFLX', 'CMCSA']
 }
+
+'''
+SECTOR_LEADERS = {}
+for sector, group in df_sp500.groupby('Sector'):
+    tickers = group['Symbol'].tolist()
+    market_caps = {}
+    for ticker in tickers:
+        try:
+            info = yf.Ticker(ticker).info
+            market_cap = info.get('marketCap', None)
+            if market_cap:
+                market_caps[ticker] = market_cap
+        except:
+            continue
+    # Sort tickers in this sector by market cap descending
+    top_tickers = sorted(market_caps.items(), key=lambda x: x[1], reverse=True)[:8]
+    SECTOR_LEADERS[sector] = [ticker for ticker, cap in top_tickers]
+for sector, leaders in SECTOR_LEADERS.items():
+    print(f"{sector}: {leaders}")
+'''
 
 INDUSTRY_PEERS = {
     # Technology Sector
     'Semiconductors': ['NVDA', 'AMD', 'INTC', 'MU', 'TSM', 'QCOM', 'AVGO', 'TXN', 'ADI', 'MRVL', 'NXPI', 'MCHP', 'ON', 'SWKS', 'QRVO'],
-    'Software—Application': ['MSFT', 'CRM', 'ADBE', 'NOW', 'INTU', 'WDAY', 'PANW', 'CRWD', 'ZM', 'TEAM', 'DOCU', 'ZS', 'OKTA', 'SNOW', 'DDOG'],
-    'Software—Infrastructure': ['ORCL', 'VMW', 'MSFT', 'PLTR', 'NET', 'MDB', 'ESTC', 'SPLK', 'FSLY', 'CFLT'],
+    'Software Application': ['MSFT', 'CRM', 'ADBE', 'NOW', 'INTU', 'WDAY', 'PANW', 'CRWD', 'ZM', 'TEAM', 'DOCU', 'ZS', 'OKTA', 'SNOW', 'DDOG'],
+    'Software Infrastructure': ['ORCL', 'VMW', 'MSFT', 'PLTR', 'NET', 'MDB', 'ESTC', 'SPLK', 'FSLY', 'CFLT'],
     'Internet Content & Information': ['GOOGL', 'META', 'NFLX', 'SNAP', 'PINS', 'TWTR', 'SPOT', 'MTCH', 'ZG', 'YELP'],
     'Consumer Electronics': ['AAPL', 'SONY', 'SONO', 'GPRO', 'ROKU', 'VZIO', 'KOSS', 'HEAR', 'VUZI'],
     'Computer Hardware': ['DELL', 'HPE', 'HPQ', 'NTAP', 'PSTG', 'WDC', 'STX', 'LOGI', 'SMCI', 'ANET'],

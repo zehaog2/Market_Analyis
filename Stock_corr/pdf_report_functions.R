@@ -27,22 +27,15 @@ generate_pdf_report <- function(all_results, tickers, years_selected, output_fil
     # Page 1: Title Page
     create_title_page(tickers, years_selected)
     
-    # Page 2: Executive Summary
-    create_executive_summary(all_results, tickers)
-    
-    # Page 3: Risk Assessment Matrix
+    # Page 2: Risk Assessment Matrix
     create_risk_matrix_page(all_results)
     
-    # Individual Stock Analysis (one page per stock)
+    # All the rest: Individual Stock Analysis (one page per stock)
     for(stock in names(all_results)) {
       if(length(all_results[[stock]]) > 0) {
         create_stock_analysis_page(all_results[[stock]], stock)
       }
     }
-    
-    # Final Page: Recommendations
-    create_recommendations_page(all_results, tickers)
-    
     cat("PDF report generated successfully!\n")
     
   }, error = function(e) {
@@ -91,7 +84,7 @@ create_title_page <- function(tickers, years_selected) {
   
   # Report details
   text(0.5, 0.45, paste("Report Generated:", format(Sys.Date(), "%B %d, %Y")), cex = 1)
-  text(0.5, 0.4, "Benchmarks: SPY (S&P 500), QQQ (NASDAQ), USO (Oil)", cex = 1)
+  text(0.5, 0.4, "Benchmarks: SPY (S&P 500)", cex = 1)
   
   # Analysis methods
   text(0.5, 0.3, "Analysis Methods:", cex = 1.2, font = 2)
@@ -106,58 +99,6 @@ create_title_page <- function(tickers, years_selected) {
   for(i in 1:length(methods)) {
     text(0.5, 0.25 - (i-1) * 0.03, paste("•", methods[i]), cex = 0.9)
   }
-}
-
-# =============================================================================
-# EXECUTIVE SUMMARY PAGE
-# =============================================================================
-
-create_executive_summary <- function(all_results, tickers) {
-  plot.new()
-  
-  # Page title
-  text(0.5, 0.95, "Executive Summary", cex = 2, font = 2)
-  
-  # Calculate summary statistics
-  summary_stats <- calculate_portfolio_summary(all_results, tickers)
-  
-  # Key findings
-  y_pos <- 0.85
-  text(0.05, y_pos, "Key Findings:", cex = 1.3, font = 2, adj = 0)
-  y_pos <- y_pos - 0.05
-  
-  # Risk classifications
-  if(length(summary_stats$high_risk_stocks) > 0) {
-    text(0.05, y_pos, paste("• High Risk Stocks:", paste(summary_stats$high_risk_stocks, collapse = ", ")), 
-         cex = 1, adj = 0, col = "red")
-    y_pos <- y_pos - 0.04
-  }
-  
-  if(length(summary_stats$medium_risk_stocks) > 0) {
-    text(0.05, y_pos, paste("• Medium Risk Stocks:", paste(summary_stats$medium_risk_stocks, collapse = ", ")), 
-         cex = 1, adj = 0, col = "orange")
-    y_pos <- y_pos - 0.04
-  }
-  
-  if(length(summary_stats$low_risk_stocks) > 0) {
-    text(0.05, y_pos, paste("• Low Risk Stocks:", paste(summary_stats$low_risk_stocks, collapse = ", ")), 
-         cex = 1, adj = 0, col = "darkgreen")
-    y_pos <- y_pos - 0.04
-  }
-  
-  # Portfolio insights
-  y_pos <- y_pos - 0.02
-  text(0.05, y_pos, "Portfolio Risk Assessment:", cex = 1.3, font = 2, adj = 0)
-  y_pos <- y_pos - 0.04
-  
-  insights <- generate_portfolio_insights(summary_stats)
-  for(insight in insights) {
-    text(0.05, y_pos, paste("•", insight), cex = 1, adj = 0)
-    y_pos <- y_pos - 0.04
-  }
-  
-  # Summary table
-  create_simple_summary_table(all_results, start_y = y_pos - 0.05)
 }
 
 # =============================================================================
@@ -205,36 +146,6 @@ create_stock_analysis_page <- function(stock_results, stock_name) {
   
   # Print the combined plot (everything on one page)
   print(combined_plot)
-}
-
-# =============================================================================
-# RECOMMENDATIONS PAGE
-# =============================================================================
-
-create_recommendations_page <- function(all_results, tickers) {
-  plot.new()
-  
-  # Page title
-  text(0.5, 0.95, "Portfolio Recommendations", cex = 2, font = 2)
-  
-  # Generate recommendations
-  recommendations <- generate_portfolio_recommendations(all_results, tickers)
-  
-  y_pos <- 0.85
-  
-  for(category in names(recommendations)) {
-    # Category header
-    text(0.05, y_pos, paste(category, ":"), cex = 1.2, font = 2, adj = 0, col = "darkblue")
-    y_pos <- y_pos - 0.04
-    
-    # Recommendations
-    for(rec in recommendations[[category]]) {
-      text(0.08, y_pos, paste("•", rec), cex = 1, adj = 0)
-      y_pos <- y_pos - 0.035
-    }
-    
-    y_pos <- y_pos - 0.02
-  }
 }
 
 # =============================================================================
@@ -311,59 +222,6 @@ generate_portfolio_insights <- function(summary_stats) {
   }
   
   return(insights)
-}
-
-create_simple_summary_table <- function(all_results, start_y = 0.4) {
-  text(0.05, start_y, "Correlation Summary:", cex = 1.2, font = 2, adj = 0)
-  
-  y_pos <- start_y - 0.04
-  
-  # Headers
-  text(0.1, y_pos, "Stock", cex = 0.9, font = 2, adj = 0)
-  text(0.3, y_pos, "SPY", cex = 0.9, font = 2, adj = 0)
-  text(0.45, y_pos, "QQQ", cex = 0.9, font = 2, adj = 0)
-  text(0.6, y_pos, "USO", cex = 0.9, font = 2, adj = 0)
-  text(0.75, y_pos, "Risk", cex = 0.9, font = 2, adj = 0)
-  
-  y_pos <- y_pos - 0.03
-  
-  # Data rows
-  row_count <- 0
-  for(stock in names(all_results)) {
-    if(row_count >= 8) break  # Limit rows to fit on page
-    
-    text(0.1, y_pos, stock, cex = 0.8, adj = 0)
-    
-    # SPY correlation
-    if("SPY" %in% names(all_results[[stock]]) && !is.null(all_results[[stock]][["SPY"]]$overall)) {
-      spy_corr <- sprintf("%.2f", all_results[[stock]][["SPY"]]$overall$correlation)
-      text(0.3, y_pos, spy_corr, cex = 0.8, adj = 0)
-    } else {
-      text(0.3, y_pos, "N/A", cex = 0.8, adj = 0)
-    }
-    
-    # QQQ correlation
-    if("QQQ" %in% names(all_results[[stock]]) && !is.null(all_results[[stock]][["QQQ"]]$overall)) {
-      qqq_corr <- sprintf("%.2f", all_results[[stock]][["QQQ"]]$overall$correlation)
-      text(0.45, y_pos, qqq_corr, cex = 0.8, adj = 0)
-    } else {
-      text(0.45, y_pos, "N/A", cex = 0.8, adj = 0)
-    }
-    
-    # USO correlation
-    if("USO" %in% names(all_results[[stock]]) && !is.null(all_results[[stock]][["USO"]]$overall)) {
-      uso_corr <- sprintf("%.2f", all_results[[stock]][["USO"]]$overall$correlation)
-      text(0.6, y_pos, uso_corr, cex = 0.8, adj = 0)
-    } else {
-      text(0.6, y_pos, "N/A", cex = 0.8, adj = 0)
-    }
-    
-    # Risk level
-    text(0.75, y_pos, "MED", cex = 0.8, adj = 0, col = "orange")
-    
-    y_pos <- y_pos - 0.025
-    row_count <- row_count + 1
-  }
 }
 
 create_risk_matrix_plot <- function(all_results) {
@@ -556,20 +414,20 @@ create_regime_analysis_plot <- function(stock_results, stock_name) {
 
 generate_stock_insights <- function(stock_results) {
   insights <- character(0)
-  
+
   for(benchmark in names(stock_results)) {
     result <- stock_results[[benchmark]]
-    
+
     if(!is.null(result)) {
       # Check for volatility dependency
       if(!is.null(result$high_vol) && !is.null(result$low_vol)) {
         vol_diff <- result$high_vol$correlation - result$low_vol$correlation
         if(vol_diff > 0.2) {
-          insights <- c(insights, paste("High volatility dependency with", benchmark, 
+          insights <- c(insights, paste("High volatility dependency with", benchmark,
                                         sprintf("(+%.2f)", vol_diff)))
         }
       }
-      
+
       # Check for regime dependency
       if(!is.null(result$bull) && !is.null(result$bear)) {
         regime_diff <- result$bear$correlation - result$bull$correlation
@@ -578,7 +436,7 @@ generate_stock_insights <- function(stock_results) {
                                         sprintf("(+%.2f)", regime_diff)))
         }
       }
-      
+
       # Check for tail dependency
       if(!is.null(result$lower_tail) && result$lower_tail$correlation > 0.7) {
         insights <- c(insights, paste("High downside tail dependence with", benchmark,
@@ -586,34 +444,11 @@ generate_stock_insights <- function(stock_results) {
       }
     }
   }
-  
+
   if(length(insights) == 0) {
     insights <- c("Relatively stable correlation patterns across market conditions")
   }
-  
+
   return(insights)
 }
 
-generate_portfolio_recommendations <- function(all_results, tickers) {
-  recommendations <- list()
-  
-  recommendations[["Risk Management"]] <- c(
-    "Monitor correlations during high volatility periods",
-    "Consider reducing position sizes in high-risk stocks during market stress",
-    "Implement dynamic hedging strategies for tail risk protection"
-  )
-  
-  recommendations[["Diversification"]] <- c(
-    "Consider adding assets with low or negative correlations",
-    "Monitor regime-dependent correlations for portfolio rebalancing",
-    "Add defensive assets that maintain low correlation during bear markets"
-  )
-  
-  recommendations[["Portfolio Construction"]] <- c(
-    "Weight portfolio away from stocks with high regime dependency",
-    "Consider volatility-based position sizing",
-    "Monitor tail dependence for extreme risk scenarios"
-  )
-  
-  return(recommendations)
-}

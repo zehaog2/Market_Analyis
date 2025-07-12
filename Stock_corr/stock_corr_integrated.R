@@ -21,7 +21,7 @@ get_data_safe <- function(symbol, start_date, end_date) {
 
 # Updated batch_analysis function with advanced analysis option
 batch_analysis <- function(tickers, years_selected, advanced = FALSE) {
-  benchmarks <- c("SPY", "QQQ", "USO")
+  benchmarks <- c("SPY")
   
   # If advanced analysis is requested, use the advanced function
   if(advanced) {
@@ -320,7 +320,7 @@ if(length(args) >= 1) {
 }
 
 # Define benchmarks
-benchmarks <- c("SPY", "QQQ", "USO")
+benchmarks <- c("SPY")
 if(!is.null(sector_etf)) {
   benchmarks <- c(benchmarks, sector_etf)
 }

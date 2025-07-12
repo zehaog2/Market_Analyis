@@ -4,7 +4,7 @@
 library(ggplot2)
 library(gridExtra)
 library(grid)
-
+source("risk_plot_functions.R")
 # =============================================================================
 # PDF REPORT GENERATOR - MAIN FUNCTION
 # =============================================================================
@@ -30,12 +30,8 @@ generate_pdf_report <- function(all_results, tickers, years_selected, output_fil
     # Page 2: Risk Assessment Matrix
     create_risk_matrix_page(all_results)
     
-    # All the rest: Individual Stock Analysis (one page per stock)
-    for(stock in names(all_results)) {
-      if(length(all_results[[stock]]) > 0) {
-        create_stock_analysis_page(all_results[[stock]], stock)
-      }
-    }
+    # All the rest:Individual Stock Analysis (one page per stock)
+    create_stock_analysis_pages(all_results)
     cat("PDF report generated successfully!\n")
     
   }, error = function(e) {
@@ -56,11 +52,11 @@ create_title_page <- function(tickers, years_selected) {
   plot.new()
   
   # Title
-  text(0.5, 0.9, "Advanced Portfolio Correlation Analysis", 
+  text(0.5, 0.9, "Stock Correlation Analysis", 
        cex = 2.5, font = 2, col = "darkblue")
   
   # Subtitle
-  text(0.5, 0.82, "Comprehensive Risk Assessment Report", 
+  text(0.5, 0.82, "Risk Assessment Report", 
        cex = 1.5, col = "darkblue")
   
   # Analysis period
@@ -68,7 +64,7 @@ create_title_page <- function(tickers, years_selected) {
        cex = 1.2)
   
   # Portfolio stocks
-  text(0.5, 0.65, "Portfolio Stocks:", cex = 1.2, font = 2)
+  text(0.5, 0.65, "Selected Stocks:", cex = 1.2, font = 2)
   
   # Stock list
   stock_text <- paste(tickers, collapse = ", ")
@@ -107,7 +103,7 @@ create_title_page <- function(tickers, years_selected) {
 
 create_risk_matrix_page <- function(all_results) {
   # Create the risk matrix plot
-  risk_plot <- create_risk_matrix_plot(all_results)
+  risk_plot <- create_risk_matrix_plot(all_results, use_icons = FALSE)
   
   # Print the plot to PDF
   print(risk_plot)
@@ -117,35 +113,38 @@ create_risk_matrix_page <- function(all_results) {
 # INDIVIDUAL STOCK ANALYSIS PAGE
 # =============================================================================
 
-create_stock_analysis_page <- function(stock_results, stock_name) {
-  # Create correlation comparison chart
-  correlation_plot <- create_stock_correlation_plot(stock_results, stock_name)
+create_stock_analysis_pages <- function(all_results) {
+  stock_names <- names(all_results)
   
-  # Create regime analysis chart  
-  regime_plot <- create_regime_analysis_plot(stock_results, stock_name)
-  
-  # Generate insights text to add as subtitle to charts
-  insights <- generate_stock_insights(stock_results)
-  insights_text <- ""
-  if(length(insights) > 0) {
-    # Limit to first 2-3 insights to fit as subtitle
-    key_insights <- insights[1:min(2, length(insights))]
-    insights_text <- paste(key_insights, collapse = " | ")
+  # Process stocks in groups of 4
+  for(i in seq(1, length(stock_names), by = 4)) {
+    # Get up to 4 stocks for this page
+    page_stocks <- stock_names[i:min(i+3, length(stock_names))]
+    
+    # Create plots for each stock on this page
+    plots_list <- list()
+    
+    for(j in 1:length(page_stocks)) {
+      stock_name <- page_stocks[j]
+      stock_results <- all_results[[stock_name]]
+      
+      if(length(stock_results) > 0) {
+        # Create correlation plot
+        corr_plot <- create_stock_correlation_plot(stock_results, stock_name)
+        # Create regime plot  
+        regime_plot <- create_regime_analysis_plot(stock_results, stock_name)
+        
+        plots_list[[2*j-1]] <- corr_plot
+        plots_list[[2*j]] <- regime_plot
+      }
+    }
+    
+    # Arrange plots in 4x2 grid (4 rows, 2 columns)
+    if(length(plots_list) > 0) {
+      combined_plot <- grid.arrange(grobs = plots_list, ncol = 2)
+      print(combined_plot)
+    }
   }
-  
-  # Create a combined plot with title and insights
-  combined_plot <- grid.arrange(
-    correlation_plot, regime_plot,
-    ncol = 2,
-    top = textGrob(paste("Analysis:", stock_name), 
-                   gp = gpar(fontsize = 16, fontface = "bold")),
-    bottom = textGrob(insights_text, 
-                      gp = gpar(fontsize = 9, fontface = "italic"),
-                      x = 0.5, hjust = 0.5)
-  )
-  
-  # Print the combined plot (everything on one page)
-  print(combined_plot)
 }
 
 # =============================================================================
@@ -224,72 +223,6 @@ generate_portfolio_insights <- function(summary_stats) {
   return(insights)
 }
 
-create_risk_matrix_plot <- function(all_results) {
-  # Prepare data for risk matrix
-  risk_data <- data.frame(
-    Stock = character(0),
-    Benchmark = character(0),
-    Overall_Corr = numeric(0),
-    Vol_Effect = numeric(0),
-    Regime_Effect = numeric(0)
-  )
-  
-  for(stock in names(all_results)) {
-    for(benchmark in names(all_results[[stock]])) {
-      result <- all_results[[stock]][[benchmark]]
-      
-      if(!is.null(result) && !is.null(result$overall)) {
-        vol_effect <- 0
-        if(!is.null(result$high_vol) && !is.null(result$low_vol)) {
-          vol_effect <- result$high_vol$correlation - result$low_vol$correlation
-        }
-        
-        regime_effect <- 0
-        if(!is.null(result$bull) && !is.null(result$bear)) {
-          regime_effect <- result$bear$correlation - result$bull$correlation
-        }
-        
-        risk_data <- rbind(risk_data, data.frame(
-          Stock = stock,
-          Benchmark = benchmark,
-          Overall_Corr = result$overall$correlation,
-          Vol_Effect = vol_effect,
-          Regime_Effect = regime_effect
-        ))
-      }
-    }
-  }
-  
-  if(nrow(risk_data) > 0) {
-    p <- ggplot(risk_data, aes(x = Vol_Effect, y = Regime_Effect, 
-                               size = abs(Overall_Corr), color = Stock)) +
-      geom_point(alpha = 0.7) +
-      scale_size_continuous(range = c(3, 10), name = "Abs Correlation") +
-      labs(title = "Portfolio Risk Assessment Matrix",
-           subtitle = "Higher values indicate greater correlation dependency",
-           x = "Volatility Effect (High Vol - Low Vol Correlation)",
-           y = "Regime Effect (Bear - Bull Correlation)",
-           caption = "Points in upper-right quadrant show highest risk") +
-      theme_minimal() +
-      theme(
-        plot.title = element_text(size = 16, face = "bold", hjust = 0.5),
-        plot.subtitle = element_text(size = 12, hjust = 0.5),
-        legend.position = "bottom"
-      ) +
-      geom_hline(yintercept = 0, linetype = "dashed", alpha = 0.5) +
-      geom_vline(xintercept = 0, linetype = "dashed", alpha = 0.5)
-    
-    return(p)
-  } else {
-    # Return simple plot if no data
-    return(ggplot() + 
-             labs(title = "Portfolio Risk Assessment Matrix",
-                  subtitle = "No sufficient data available for risk matrix") +
-             theme_minimal() +
-             theme(plot.title = element_text(size = 16, face = "bold", hjust = 0.5)))
-  }
-}
-
 create_stock_correlation_plot <- function(stock_results, stock_name) {
   # Prepare correlation data
   corr_data <- data.frame(
@@ -344,7 +277,7 @@ create_stock_correlation_plot <- function(stock_results, stock_name) {
       theme(
         plot.title = element_text(size = 12, face = "bold", hjust = 0.5),
         axis.text.x = element_text(angle = 45, hjust = 1),
-        legend.position = "bottom"
+        legend.position = "right"
       ) +
       ylim(-1, 1)
     
@@ -400,7 +333,7 @@ create_regime_analysis_plot <- function(stock_results, stock_name) {
       theme(
         plot.title = element_text(size = 12, face = "bold", hjust = 0.5),
         axis.text.x = element_text(angle = 45, hjust = 1),
-        legend.position = "bottom"
+        legend.position = "right"
       ) +
       ylim(-1, 1)
     

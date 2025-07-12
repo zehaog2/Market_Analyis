@@ -362,7 +362,7 @@ advanced_correlation_analysis <- function(stock_returns, benchmark_returns, stoc
 # =============================================================================
 
 batch_advanced_analysis <- function(tickers, years_selected) {
-  benchmarks <- c("SPY", "QQQ", "USO")
+  benchmarks <- c("SPY")
   
   # Calculate dates
   end_date <- Sys.Date()

@@ -1,10 +1,11 @@
 # pdf_report_functions.R
-# Simplified PDF Report Generation Functions for Advanced Correlation Analysis
+# PDF Report Generation Functions for Advanced Correlation Analysis - With Beta
 
 library(ggplot2)
 library(gridExtra)
 library(grid)
 source("risk_plot_functions.R")
+
 # =============================================================================
 # PDF REPORT GENERATOR - MAIN FUNCTION
 # =============================================================================
@@ -30,8 +31,9 @@ generate_pdf_report <- function(all_results, tickers, years_selected, output_fil
     # Page 2: Risk Assessment Matrix
     create_risk_matrix_page(all_results)
     
-    # All the rest:Individual Stock Analysis (one page per stock)
+    # Individual Stock Analysis (4 stocks per page)
     create_stock_analysis_pages(all_results)
+    
     cat("PDF report generated successfully!\n")
     
   }, error = function(e) {
@@ -52,11 +54,11 @@ create_title_page <- function(tickers, years_selected) {
   plot.new()
   
   # Title
-  text(0.5, 0.9, "Stock Correlation Analysis", 
+  text(0.5, 0.9, "Advanced Portfolio Correlation Analysis", 
        cex = 2.5, font = 2, col = "darkblue")
   
   # Subtitle
-  text(0.5, 0.82, "Risk Assessment Report", 
+  text(0.5, 0.82, "Comprehensive Risk Assessment Report", 
        cex = 1.5, col = "darkblue")
   
   # Analysis period
@@ -64,7 +66,7 @@ create_title_page <- function(tickers, years_selected) {
        cex = 1.2)
   
   # Portfolio stocks
-  text(0.5, 0.65, "Selected Stocks:", cex = 1.2, font = 2)
+  text(0.5, 0.65, "Portfolio Stocks:", cex = 1.2, font = 2)
   
   # Stock list
   stock_text <- paste(tickers, collapse = ", ")
@@ -89,7 +91,8 @@ create_title_page <- function(tickers, years_selected) {
     "Statistical Significance Testing",
     "Volatility-Adjusted Correlations", 
     "Market Regime Analysis",
-    "Tail Dependence Analysis"
+    "Tail Dependence Analysis",
+    "Beta Calculations for Market Sensitivity"
   )
   
   for(i in 1:length(methods)) {
@@ -110,7 +113,7 @@ create_risk_matrix_page <- function(all_results) {
 }
 
 # =============================================================================
-# INDIVIDUAL STOCK ANALYSIS PAGE
+# INDIVIDUAL STOCK ANALYSIS PAGES (4 stocks per page)
 # =============================================================================
 
 create_stock_analysis_pages <- function(all_results) {
@@ -151,96 +154,36 @@ create_stock_analysis_pages <- function(all_results) {
 # HELPER FUNCTIONS
 # =============================================================================
 
-calculate_portfolio_summary <- function(all_results, tickers) {
-  high_risk_stocks <- character(0)
-  medium_risk_stocks <- character(0)
-  low_risk_stocks <- character(0)
-  
-  for(stock in names(all_results)) {
-    risk_count <- 0
-    total_benchmarks <- 0
-    
-    for(benchmark in names(all_results[[stock]])) {
-      result <- all_results[[stock]][[benchmark]]
-      
-      if(!is.null(result)) {
-        total_benchmarks <- total_benchmarks + 1
-        
-        # Check volatility dependency
-        if(!is.null(result$high_vol) && !is.null(result$low_vol)) {
-          if(result$high_vol$correlation - result$low_vol$correlation > 0.15) risk_count <- risk_count + 1
-        }
-        
-        # Check regime dependency
-        if(!is.null(result$bull) && !is.null(result$bear)) {
-          if(result$bear$correlation - result$bull$correlation > 0.15) risk_count <- risk_count + 1
-        }
-        
-        # Check tail dependency
-        if(!is.null(result$lower_tail) && result$lower_tail$correlation > 0.6) risk_count <- risk_count + 1
-      }
-    }
-    
-    # Classify based on average risk factors
-    if(total_benchmarks > 0) {
-      avg_risk <- risk_count / total_benchmarks
-      if(avg_risk >= 1.5) {
-        high_risk_stocks <- c(high_risk_stocks, stock)
-      } else if(avg_risk >= 0.8) {
-        medium_risk_stocks <- c(medium_risk_stocks, stock)
-      } else {
-        low_risk_stocks <- c(low_risk_stocks, stock)
-      }
-    }
-  }
-  
-  return(list(
-    high_risk_stocks = high_risk_stocks,
-    medium_risk_stocks = medium_risk_stocks,
-    low_risk_stocks = low_risk_stocks,
-    total_stocks = length(tickers)
-  ))
-}
-
-generate_portfolio_insights <- function(summary_stats) {
-  insights <- character(0)
-  
-  total_stocks <- summary_stats$total_stocks
-  high_risk_pct <- length(summary_stats$high_risk_stocks) / total_stocks * 100
-  
-  if(high_risk_pct > 50) {
-    insights <- c(insights, "High concentration of risky assets - diversification concerns")
-  } else if(high_risk_pct > 25) {
-    insights <- c(insights, "Moderate risk concentration - monitor during volatile periods")
-  } else {
-    insights <- c(insights, "Well-diversified portfolio from correlation perspective")
-  }
-  
-  if(length(summary_stats$high_risk_stocks) > 0) {
-    insights <- c(insights, "High-risk stocks show correlation spikes during market stress")
-  }
-  
-  return(insights)
-}
-
 create_stock_correlation_plot <- function(stock_results, stock_name) {
   # Prepare correlation data
   corr_data <- data.frame(
     Condition = character(0),
     Benchmark = character(0),
-    Correlation = numeric(0)
+    Correlation = numeric(0),
+    Beta = numeric(0)
   )
+  
+  # Get overall beta for title
+  overall_beta <- NA
   
   for(benchmark in names(stock_results)) {
     result <- stock_results[[benchmark]]
     
     if(!is.null(result)) {
+      # Get overall beta for title
+      if(!is.na(overall_beta) && !is.null(result$overall$beta)) {
+        overall_beta <- result$overall$beta
+      } else if(is.na(overall_beta) && !is.null(result$overall$beta)) {
+        overall_beta <- result$overall$beta
+      }
+      
       # Overall correlation
       if(!is.null(result$overall)) {
         corr_data <- rbind(corr_data, data.frame(
           Condition = "Overall",
           Benchmark = benchmark,
-          Correlation = result$overall$correlation
+          Correlation = result$overall$correlation,
+          Beta = result$overall$beta
         ))
       }
       
@@ -249,7 +192,8 @@ create_stock_correlation_plot <- function(stock_results, stock_name) {
         corr_data <- rbind(corr_data, data.frame(
           Condition = "Bull Market",
           Benchmark = benchmark,
-          Correlation = result$bull$correlation
+          Correlation = result$bull$correlation,
+          Beta = result$bull$beta
         ))
       }
       
@@ -258,11 +202,16 @@ create_stock_correlation_plot <- function(stock_results, stock_name) {
         corr_data <- rbind(corr_data, data.frame(
           Condition = "Bear Market",
           Benchmark = benchmark,
-          Correlation = result$bear$correlation
+          Correlation = result$bear$correlation,
+          Beta = result$bear$beta
         ))
       }
     }
   }
+  
+  # Create title with beta
+  beta_text <- if(!is.na(overall_beta)) paste0("(β=", sprintf("%.2f", overall_beta), ")") else ""
+  plot_title <- paste("Market Regime Correlations:", stock_name, beta_text)
   
   if(nrow(corr_data) > 0) {
     p <- ggplot(corr_data, aes(x = Benchmark, y = Correlation, fill = Condition)) +
@@ -270,7 +219,7 @@ create_stock_correlation_plot <- function(stock_results, stock_name) {
       scale_fill_manual(values = c("Overall" = "lightblue", 
                                    "Bull Market" = "lightgreen", 
                                    "Bear Market" = "lightcoral")) +
-      labs(title = paste("Market Regime Correlations:", stock_name),
+      labs(title = plot_title,
            y = "Correlation Coefficient",
            x = "Benchmark") +
       theme_minimal() +
@@ -294,19 +243,31 @@ create_regime_analysis_plot <- function(stock_results, stock_name) {
   vol_data <- data.frame(
     Regime = character(0),
     Benchmark = character(0),
-    Correlation = numeric(0)
+    Correlation = numeric(0),
+    Beta = numeric(0)
   )
+  
+  # Get overall beta for title
+  overall_beta <- NA
   
   for(benchmark in names(stock_results)) {
     result <- stock_results[[benchmark]]
     
     if(!is.null(result)) {
+      # Get overall beta for title
+      if(!is.na(overall_beta) && !is.null(result$overall$beta)) {
+        overall_beta <- result$overall$beta
+      } else if(is.na(overall_beta) && !is.null(result$overall$beta)) {
+        overall_beta <- result$overall$beta
+      }
+      
       # High volatility
       if(!is.null(result$high_vol)) {
         vol_data <- rbind(vol_data, data.frame(
           Regime = "High Volatility",
           Benchmark = benchmark,
-          Correlation = result$high_vol$correlation
+          Correlation = result$high_vol$correlation,
+          Beta = result$high_vol$beta
         ))
       }
       
@@ -315,18 +276,23 @@ create_regime_analysis_plot <- function(stock_results, stock_name) {
         vol_data <- rbind(vol_data, data.frame(
           Regime = "Low Volatility",
           Benchmark = benchmark,
-          Correlation = result$low_vol$correlation
+          Correlation = result$low_vol$correlation,
+          Beta = result$low_vol$beta
         ))
       }
     }
   }
+  
+  # Create title with beta
+  beta_text <- if(!is.na(overall_beta)) paste0("(β=", sprintf("%.2f", overall_beta), ")") else ""
+  plot_title <- paste("Volatility Regime Correlations:", stock_name, beta_text)
   
   if(nrow(vol_data) > 0) {
     p <- ggplot(vol_data, aes(x = Benchmark, y = Correlation, fill = Regime)) +
       geom_bar(stat = "identity", position = "dodge", alpha = 0.8) +
       scale_fill_manual(values = c("High Volatility" = "orange", 
                                    "Low Volatility" = "lightgreen")) +
-      labs(title = paste("Volatility Regime Correlations:", stock_name),
+      labs(title = plot_title,
            y = "Correlation Coefficient",
            x = "Benchmark") +
       theme_minimal() +
@@ -347,10 +313,10 @@ create_regime_analysis_plot <- function(stock_results, stock_name) {
 
 generate_stock_insights <- function(stock_results) {
   insights <- character(0)
-
+  
   for(benchmark in names(stock_results)) {
     result <- stock_results[[benchmark]]
-
+    
     if(!is.null(result)) {
       # Check for volatility dependency
       if(!is.null(result$high_vol) && !is.null(result$low_vol)) {
@@ -360,7 +326,7 @@ generate_stock_insights <- function(stock_results) {
                                         sprintf("(+%.2f)", vol_diff)))
         }
       }
-
+      
       # Check for regime dependency
       if(!is.null(result$bull) && !is.null(result$bear)) {
         regime_diff <- result$bear$correlation - result$bull$correlation
@@ -369,7 +335,7 @@ generate_stock_insights <- function(stock_results) {
                                         sprintf("(+%.2f)", regime_diff)))
         }
       }
-
+      
       # Check for tail dependency
       if(!is.null(result$lower_tail) && result$lower_tail$correlation > 0.7) {
         insights <- c(insights, paste("High downside tail dependence with", benchmark,
@@ -377,11 +343,10 @@ generate_stock_insights <- function(stock_results) {
       }
     }
   }
-
+  
   if(length(insights) == 0) {
     insights <- c("Relatively stable correlation patterns across market conditions")
   }
-
+  
   return(insights)
 }
-

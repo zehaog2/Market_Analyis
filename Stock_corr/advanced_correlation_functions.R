@@ -1,6 +1,5 @@
-
 # =============================================================================
-# ADVANCED CORRELATION ANALYSIS FUNCTION
+# ADVANCED CORRELATION ANALYSIS FUNCTION WITH BETA
 # =============================================================================
 
 advanced_correlation_analysis <- function(stock_returns, benchmark_returns, stock_name, benchmark_name) {
@@ -30,8 +29,13 @@ advanced_correlation_analysis <- function(stock_returns, benchmark_returns, stoc
   
   # Overall correlation with significance
   overall_test <- cor.test(stock_clean, bench_clean)
+  
+  # Calculate overall beta
+  overall_beta <- cov(stock_clean, bench_clean) / var(bench_clean)
+  
   results$overall <- list(
     correlation = as.numeric(overall_test$estimate),
+    beta = overall_beta,
     p_value = overall_test$p.value,
     conf_low = overall_test$conf.int[1],
     conf_high = overall_test$conf.int[2],
@@ -39,6 +43,7 @@ advanced_correlation_analysis <- function(stock_returns, benchmark_returns, stoc
   )
   
   cat(sprintf("Overall Correlation: %.4f\n", results$overall$correlation))
+  cat(sprintf("Overall Beta: %.4f\n", results$overall$beta))
   cat(sprintf("P-value: %.6f %s\n", results$overall$p_value, 
               ifelse(results$overall$significant, "(SIGNIFICANT)", "(not significant)")))
   cat(sprintf("95%% Confidence Interval: [%.4f, %.4f]\n", 
@@ -71,12 +76,16 @@ advanced_correlation_analysis <- function(stock_returns, benchmark_returns, stoc
       high_vol_mask <- stock_vol_clean > vol_75th
       low_vol_mask <- stock_vol_clean < vol_25th
       
-      # Calculate volatility-regime correlations
+      # Calculate volatility-regime correlations and betas
       if(sum(high_vol_mask, na.rm = TRUE) >= 10) {
         high_vol_test <- cor.test(stock_vol_returns[high_vol_mask], 
                                   bench_vol_returns[high_vol_mask])
+        high_vol_beta <- cov(stock_vol_returns[high_vol_mask], 
+                             bench_vol_returns[high_vol_mask]) / var(bench_vol_returns[high_vol_mask])
+        
         results$high_vol <- list(
           correlation = as.numeric(high_vol_test$estimate),
+          beta = high_vol_beta,
           p_value = high_vol_test$p.value,
           n_obs = sum(high_vol_mask, na.rm = TRUE),
           significant = high_vol_test$p.value < 0.05
@@ -86,8 +95,12 @@ advanced_correlation_analysis <- function(stock_returns, benchmark_returns, stoc
       if(sum(low_vol_mask, na.rm = TRUE) >= 10) {
         low_vol_test <- cor.test(stock_vol_returns[low_vol_mask], 
                                  bench_vol_returns[low_vol_mask])
+        low_vol_beta <- cov(stock_vol_returns[low_vol_mask], 
+                            bench_vol_returns[low_vol_mask]) / var(bench_vol_returns[low_vol_mask])
+        
         results$low_vol <- list(
           correlation = as.numeric(low_vol_test$estimate),
+          beta = low_vol_beta,
           p_value = low_vol_test$p.value,
           n_obs = sum(low_vol_mask, na.rm = TRUE),
           significant = low_vol_test$p.value < 0.05
@@ -96,22 +109,23 @@ advanced_correlation_analysis <- function(stock_returns, benchmark_returns, stoc
       
       # Report volatility analysis
       if(!is.null(results$high_vol)) {
-        cat(sprintf("High Volatility Periods: %.4f (p=%.4f, n=%d) %s\n", 
-                    results$high_vol$correlation, results$high_vol$p_value, 
-                    results$high_vol$n_obs,
+        cat(sprintf("High Volatility Periods: %.4f (β=%.2f, p=%.4f, n=%d) %s\n", 
+                    results$high_vol$correlation, results$high_vol$beta, 
+                    results$high_vol$p_value, results$high_vol$n_obs,
                     ifelse(results$high_vol$significant, "*", "")))
       }
       if(!is.null(results$low_vol)) {
-        cat(sprintf("Low Volatility Periods:  %.4f (p=%.4f, n=%d) %s\n", 
-                    results$low_vol$correlation, results$low_vol$p_value, 
-                    results$low_vol$n_obs,
+        cat(sprintf("Low Volatility Periods:  %.4f (β=%.2f, p=%.4f, n=%d) %s\n", 
+                    results$low_vol$correlation, results$low_vol$beta,
+                    results$low_vol$p_value, results$low_vol$n_obs,
                     ifelse(results$low_vol$significant, "*", "")))
       }
       
       # Volatility regime comparison
       if(!is.null(results$high_vol) && !is.null(results$low_vol)) {
         vol_diff <- results$high_vol$correlation - results$low_vol$correlation
-        cat(sprintf("Volatility Effect: %.4f (High - Low volatility correlation)\n", vol_diff))
+        beta_diff <- results$high_vol$beta - results$low_vol$beta
+        cat(sprintf("Volatility Effect: %.4f correlation, %.2f beta (High - Low)\n", vol_diff, beta_diff))
         if(vol_diff > 0.1) {
           cat("→ Strong volatility dependency: correlations increase during volatile periods\n")
         } else if(vol_diff < -0.1) {
@@ -141,52 +155,59 @@ advanced_correlation_analysis <- function(stock_returns, benchmark_returns, stoc
   # Bull market analysis
   if(sum(bull_mask, na.rm = TRUE) >= 10) {
     bull_test <- cor.test(stock_clean[bull_mask], bench_clean[bull_mask])
+    bull_beta <- cov(stock_clean[bull_mask], bench_clean[bull_mask]) / var(bench_clean[bull_mask])
+    
     results$bull <- list(
       correlation = as.numeric(bull_test$estimate),
+      beta = bull_beta,
       p_value = bull_test$p.value,
       n_obs = sum(bull_mask, na.rm = TRUE),
       significant = bull_test$p.value < 0.05
     )
-    cat(sprintf("Bull Market (top 40%% days): %.4f (p=%.4f, n=%d) %s\n", 
-                results$bull$correlation, results$bull$p_value, 
-                results$bull$n_obs,
-                ifelse(results$bull$significant, "*", "")))
+    cat(sprintf("Bull Market (top 40%% days): %.4f (β=%.2f, p=%.4f, n=%d) %s\n", 
+                results$bull$correlation, results$bull$beta, results$bull$p_value, 
+                results$bull$n_obs, ifelse(results$bull$significant, "*", "")))
   }
   
   # Bear market analysis
   if(sum(bear_mask, na.rm = TRUE) >= 10) {
     bear_test <- cor.test(stock_clean[bear_mask], bench_clean[bear_mask])
+    bear_beta <- cov(stock_clean[bear_mask], bench_clean[bear_mask]) / var(bench_clean[bear_mask])
+    
     results$bear <- list(
       correlation = as.numeric(bear_test$estimate),
+      beta = bear_beta,
       p_value = bear_test$p.value,
       n_obs = sum(bear_mask, na.rm = TRUE),
       significant = bear_test$p.value < 0.05
     )
-    cat(sprintf("Bear Market (bottom 40%% days): %.4f (p=%.4f, n=%d) %s\n", 
-                results$bear$correlation, results$bear$p_value, 
-                results$bear$n_obs,
-                ifelse(results$bear$significant, "*", "")))
+    cat(sprintf("Bear Market (bottom 40%% days): %.4f (β=%.2f, p=%.4f, n=%d) %s\n", 
+                results$bear$correlation, results$bear$beta, results$bear$p_value, 
+                results$bear$n_obs, ifelse(results$bear$significant, "*", "")))
   }
   
   # Neutral market analysis
   if(sum(neutral_mask, na.rm = TRUE) >= 10) {
     neutral_test <- cor.test(stock_clean[neutral_mask], bench_clean[neutral_mask])
+    neutral_beta <- cov(stock_clean[neutral_mask], bench_clean[neutral_mask]) / var(bench_clean[neutral_mask])
+    
     results$neutral <- list(
       correlation = as.numeric(neutral_test$estimate),
+      beta = neutral_beta,
       p_value = neutral_test$p.value,
       n_obs = sum(neutral_mask, na.rm = TRUE),
       significant = neutral_test$p.value < 0.05
     )
-    cat(sprintf("Neutral Market (middle 20%% days): %.4f (p=%.4f, n=%d) %s\n", 
-                results$neutral$correlation, results$neutral$p_value, 
-                results$neutral$n_obs,
-                ifelse(results$neutral$significant, "*", "")))
+    cat(sprintf("Neutral Market (middle 20%% days): %.4f (β=%.2f, p=%.4f, n=%d) %s\n", 
+                results$neutral$correlation, results$neutral$beta, results$neutral$p_value, 
+                results$neutral$n_obs, ifelse(results$neutral$significant, "*", "")))
   }
   
   # Regime comparison
   if(!is.null(results$bull) && !is.null(results$bear)) {
     regime_diff <- results$bear$correlation - results$bull$correlation
-    cat(sprintf("Regime Effect: %.4f (Bear - Bull correlation)\n", regime_diff))
+    beta_diff <- results$bear$beta - results$bull$beta
+    cat(sprintf("Regime Effect: %.4f correlation, %.2f beta (Bear - Bull)\n", regime_diff, beta_diff))
     if(regime_diff > 0.15) {
       cat("→ Strong regime dependency: much higher correlation in bear markets\n")
     } else if(regime_diff < -0.15) {
@@ -217,15 +238,18 @@ advanced_correlation_analysis <- function(stock_returns, benchmark_returns, stoc
   upper_tail_mask <- stock_extreme_pos | bench_extreme_pos
   if(sum(upper_tail_mask, na.rm = TRUE) >= 5) {
     upper_tail_test <- cor.test(stock_clean[upper_tail_mask], bench_clean[upper_tail_mask])
+    upper_tail_beta <- cov(stock_clean[upper_tail_mask], bench_clean[upper_tail_mask]) / var(bench_clean[upper_tail_mask])
+    
     results$upper_tail <- list(
       correlation = as.numeric(upper_tail_test$estimate),
+      beta = upper_tail_beta,
       p_value = upper_tail_test$p.value,
       n_obs = sum(upper_tail_mask, na.rm = TRUE),
       significant = upper_tail_test$p.value < 0.05
     )
-    cat(sprintf("Upper Tail (extreme positive): %.4f (p=%.4f, n=%d) %s\n", 
-                results$upper_tail$correlation, results$upper_tail$p_value, 
-                results$upper_tail$n_obs,
+    cat(sprintf("Upper Tail (extreme positive): %.4f (β=%.2f, p=%.4f, n=%d) %s\n", 
+                results$upper_tail$correlation, results$upper_tail$beta, 
+                results$upper_tail$p_value, results$upper_tail$n_obs,
                 ifelse(results$upper_tail$significant, "*", "")))
   }
   
@@ -233,15 +257,18 @@ advanced_correlation_analysis <- function(stock_returns, benchmark_returns, stoc
   lower_tail_mask <- stock_extreme_neg | bench_extreme_neg
   if(sum(lower_tail_mask, na.rm = TRUE) >= 5) {
     lower_tail_test <- cor.test(stock_clean[lower_tail_mask], bench_clean[lower_tail_mask])
+    lower_tail_beta <- cov(stock_clean[lower_tail_mask], bench_clean[lower_tail_mask]) / var(bench_clean[lower_tail_mask])
+    
     results$lower_tail <- list(
       correlation = as.numeric(lower_tail_test$estimate),
+      beta = lower_tail_beta,
       p_value = lower_tail_test$p.value,
       n_obs = sum(lower_tail_mask, na.rm = TRUE),
       significant = lower_tail_test$p.value < 0.05
     )
-    cat(sprintf("Lower Tail (extreme negative): %.4f (p=%.4f, n=%d) %s\n", 
-                results$lower_tail$correlation, results$lower_tail$p_value, 
-                results$lower_tail$n_obs,
+    cat(sprintf("Lower Tail (extreme negative): %.4f (β=%.2f, p=%.4f, n=%d) %s\n", 
+                results$lower_tail$correlation, results$lower_tail$beta,
+                results$lower_tail$p_value, results$lower_tail$n_obs,
                 ifelse(results$lower_tail$significant, "*", "")))
   }
   
@@ -256,16 +283,18 @@ advanced_correlation_analysis <- function(stock_returns, benchmark_returns, stoc
   
   if(sum(extreme_positive_mask, na.rm = TRUE) >= 5) {
     ext_pos_test <- cor.test(stock_clean[extreme_positive_mask], bench_clean[extreme_positive_mask])
-    cat(sprintf("95th Percentile Tail: %.4f (p=%.4f, n=%d) %s\n", 
-                ext_pos_test$estimate, ext_pos_test$p.value, 
+    ext_pos_beta <- cov(stock_clean[extreme_positive_mask], bench_clean[extreme_positive_mask]) / var(bench_clean[extreme_positive_mask])
+    cat(sprintf("95th Percentile Tail: %.4f (β=%.2f, p=%.4f, n=%d) %s\n", 
+                ext_pos_test$estimate, ext_pos_beta, ext_pos_test$p.value, 
                 sum(extreme_positive_mask, na.rm = TRUE),
                 ifelse(ext_pos_test$p.value < 0.05, "*", "")))
   }
   
   if(sum(extreme_negative_mask, na.rm = TRUE) >= 5) {
     ext_neg_test <- cor.test(stock_clean[extreme_negative_mask], bench_clean[extreme_negative_mask])
-    cat(sprintf("5th Percentile Tail: %.4f (p=%.4f, n=%d) %s\n", 
-                ext_neg_test$estimate, ext_neg_test$p.value, 
+    ext_neg_beta <- cov(stock_clean[extreme_negative_mask], bench_clean[extreme_negative_mask]) / var(bench_clean[extreme_negative_mask])
+    cat(sprintf("5th Percentile Tail: %.4f (β=%.2f, p=%.4f, n=%d) %s\n", 
+                ext_neg_test$estimate, ext_neg_beta, ext_neg_test$p.value, 
                 sum(extreme_negative_mask, na.rm = TRUE),
                 ifelse(ext_neg_test$p.value < 0.05, "*", "")))
   }
@@ -273,7 +302,8 @@ advanced_correlation_analysis <- function(stock_returns, benchmark_returns, stoc
   # Tail asymmetry analysis
   if(!is.null(results$upper_tail) && !is.null(results$lower_tail)) {
     tail_asymmetry <- results$lower_tail$correlation - results$upper_tail$correlation
-    cat(sprintf("Tail Asymmetry: %.4f (Lower - Upper tail correlation)\n", tail_asymmetry))
+    beta_asymmetry <- results$lower_tail$beta - results$upper_tail$beta
+    cat(sprintf("Tail Asymmetry: %.4f correlation, %.2f beta (Lower - Upper)\n", tail_asymmetry, beta_asymmetry))
     if(tail_asymmetry > 0.2) {
       cat("→ Stronger downside dependence: correlations spike during crashes\n")
     } else if(tail_asymmetry < -0.2) {
@@ -304,8 +334,8 @@ advanced_correlation_analysis <- function(stock_returns, benchmark_returns, stoc
     strength_desc <- "VERY WEAK"
   }
   
-  cat(sprintf("1. Overall Relationship: %s correlation (%.3f)\n", 
-              strength_desc, results$overall$correlation))
+  cat(sprintf("1. Overall Relationship: %s correlation (%.3f) with beta %.2f\n", 
+              strength_desc, results$overall$correlation, results$overall$beta))
   
   # Risk assessment
   risk_factors <- character(0)
@@ -441,10 +471,10 @@ generate_advanced_summary <- function(all_results) {
   
   # Summary table
   cat("RISK ASSESSMENT SUMMARY\n")
-  cat(paste(rep("-", 40), collapse = ""),"\n")
-  cat(sprintf("%-8s %-8s %-8s %-12s %-12s %-15s\n", 
-              "Stock", "Benchmark", "Overall", "Bull/Bear", "Vol Effect", "Risk Level"))
-  cat(paste(rep("-", 80), collapse = ""),"\n")
+  cat(paste(rep("-", 70), collapse = ""),"\n")
+  cat(sprintf("%-8s %-8s %-8s %-6s %-12s %-12s %-15s\n", 
+              "Stock", "Benchmark", "Overall", "Beta", "Bull/Bear", "Vol Effect", "Risk Level"))
+  cat(paste(rep("-", 70), collapse = ""),"\n")
   
   for(stock in names(all_results)) {
     for(benchmark in names(all_results[[stock]])) {
@@ -452,6 +482,7 @@ generate_advanced_summary <- function(all_results) {
       
       if(!is.null(result)) {
         overall_corr <- result$overall$correlation
+        overall_beta <- result$overall$beta
         
         # Calculate regime effect
         regime_effect <- "N/A"
@@ -485,13 +516,14 @@ generate_advanced_summary <- function(all_results) {
           risk_level <- "MEDIUM"
         }
         
-        cat(sprintf("%-8s %-8s %-8.3f %-12s %-12s %-15s\n", 
-                    stock, benchmark, overall_corr, regime_effect, vol_effect, risk_level))
+        cat(sprintf("%-8s %-8s %-8.3f %-6.2f %-12s %-12s %-15s\n", 
+                    stock, benchmark, overall_corr, overall_beta, regime_effect, vol_effect, risk_level))
       }
     }
   }
   
   cat("\nLEGEND:\n")
+  cat("- Beta: Market sensitivity (1.0 = moves with market, >1.0 = amplified moves)\n")
   cat("- Bull/Bear: Difference between bear and bull market correlations\n")
   cat("- Vol Effect: Difference between high and low volatility correlations\n")
   cat("- Risk Level: HIGH = multiple risk factors, MEDIUM = some risk factors, LOW = minimal risk\n")

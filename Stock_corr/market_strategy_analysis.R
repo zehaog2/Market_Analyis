@@ -186,22 +186,8 @@ create_bull_market_strategy_page <- function() {
   text(0.5, 0.95, "Bull Market Strategy Matrix", 
        cex = 2, font = 2, col = "darkgreen")
   
-  # Create strategy grid
+  # Create strategy grid (now has full page space)
   create_strategy_grid(bull_data, "Bull Market Conditions")
-  
-  # Key insights
-  text(0.5, 0.25, "Bull Market Key Insights:", cex = 1.3, font = 2)
-  
-  insights <- c(
-    "• Lower-Left + High Beta: Optimal strategy (Grade A)",
-    "• Upper-Right + High Beta: Avoid - high risk when volatility hits",
-    "• High Beta essential for bull market participation",
-    "• Protection during corrections more important than bear market protection"
-  )
-  
-  for(i in 1:length(insights)) {
-    text(0.5, 0.20 - (i-1) * 0.03, insights[i], cex = 1.1)
-  }
 }
 
 # =============================================================================
@@ -234,26 +220,12 @@ create_bear_market_strategy_page <- function() {
   text(0.5, 0.95, "Bear Market Strategy Matrix", 
        cex = 2, font = 2, col = "darkred")
   
-  # Create strategy grid
+  # Create strategy grid (now has full page space)
   create_strategy_grid(bear_data, "Bear Market Conditions")
-  
-  # Key insights
-  text(0.5, 0.25, "Bear Market Key Insights:", cex = 1.3, font = 2)
-  
-  insights <- c(
-    "• Lower-Left + Low Beta: Optimal defensive strategy (Grade A+)",
-    "• Upper-Right positions: Avoid completely (Grade D-F)",
-    "• Low Beta essential for limiting losses",
-    "• Negative regime effect more important than volatility effect"
-  )
-  
-  for(i in 1:length(insights)) {
-    text(0.5, 0.20 - (i-1) * 0.03, insights[i], cex = 1.1)
-  }
 }
 
 # =============================================================================
-# PAGE 5: SIDEWAYS MARKET STRATEGY
+# PAGE 5: SIDEWAYS MARKET STRATEGY (NO KEY INSIGHTS)
 # =============================================================================
 
 create_sideways_market_strategy_page <- function() {
@@ -282,55 +254,98 @@ create_sideways_market_strategy_page <- function() {
   text(0.5, 0.95, "Sideways Market Strategy Matrix", 
        cex = 2, font = 2, col = "darkorange")
   
-  # Create strategy grid
+  # Create strategy grid (now has full page space)
   create_strategy_grid(sideways_data, "Sideways Market Conditions")
+}
+
+# =============================================================================
+# IMPROVED STRATEGY GRID WITH MORE SPACE
+# =============================================================================
+
+# =============================================================================
+# STRATEGY GRID WITH TEXT WRAPPING
+# =============================================================================
+
+create_strategy_grid <- function(data, title) {
+  # Much larger spacing to prevent any overlap
+  y_positions <- c(0.80, 0.58, 0.36, 0.14)  # 0.22 unit gaps
   
-  # Key insights
-  text(0.5, 0.25, "Sideways Market Key Insights:", cex = 1.3, font = 2)
+  # Headers positioned higher
+  text(0.325, 0.90, "High Beta (>1.0)", cex = 1.3, font = 2)
+  text(0.575, 0.90, "Low Beta (<1.0)", cex = 1.3, font = 2)
   
-  insights <- c(
-    "• Lower-Left positions: Consistently perform well",
-    "• Upper-Right positions: Vulnerable to whipsaws and volatility",
-    "• Beta preference depends on volatility level",
-    "• Focus on consistency over amplification"
-  )
-  
-  for(i in 1:length(insights)) {
-    text(0.5, 0.20 - (i-1) * 0.03, insights[i], cex = 1.1)
+  # Each position gets its own clearly separated row
+  for(i in 1:4) {
+    y_pos <- y_positions[i]
+    
+    # Position name (left side)
+    text(0.1, y_pos, data$Position[i], cex = 1.1, font = 2)
+    
+    # High Beta section
+    grade_color <- get_grade_color(data$High_Beta[i])
+    text(0.325, y_pos + 0.025, data$High_Beta[i], cex = 1.4, font = 2, col = grade_color)
+    
+    # Wrap and display High Beta description
+    high_beta_lines <- wrap_text_lines(data$High_Beta_Desc[i], max_chars = 25)
+    for(j in 1:length(high_beta_lines)) {
+      text(0.325, y_pos - 0.02 - (j-1)*0.025, high_beta_lines[j], cex = 0.7, adj = 0.5)
+    }
+    
+    # Low Beta section  
+    grade_color <- get_grade_color(data$Low_Beta[i])
+    text(0.575, y_pos + 0.025, data$Low_Beta[i], cex = 1.4, font = 2, col = grade_color)
+    
+    # Wrap and display Low Beta description
+    low_beta_lines <- wrap_text_lines(data$Low_Beta_Desc[i], max_chars = 25)
+    for(j in 1:length(low_beta_lines)) {
+      text(0.575, y_pos - 0.02 - (j-1)*0.025, low_beta_lines[j], cex = 0.7, adj = 0.5)
+    }
   }
 }
 
 # =============================================================================
-# HELPER FUNCTION: CREATE STRATEGY GRID
+# TEXT WRAPPING HELPER FUNCTION
 # =============================================================================
 
-create_strategy_grid <- function(data, title) {
-  # Create visual grid
-  grid_x <- c(0.2, 0.45, 0.7)
-  grid_y <- c(0.75, 0.6, 0.45)
-  
-  # Headers
-  text(0.325, 0.82, "High Beta (>1.0)", cex = 1.2, font = 2)
-  text(0.575, 0.82, "Low Beta (<1.0)", cex = 1.2, font = 2)
-  
-  # Position labels and grades
-  for(i in 1:4) {
-    y_pos <- grid_y[ifelse(i <= 2, 1, 2)]
-    if(i %in% c(2, 4)) y_pos <- grid_y[3]
-    
-    # Position name
-    text(0.1, y_pos, data$Position[i], cex = 1.1, font = 2)
-    
-    # High Beta grade and description
-    grade_color <- get_grade_color(data$High_Beta[i])
-    text(0.325, y_pos + 0.02, data$High_Beta[i], cex = 1.4, font = 2, col = grade_color)
-    text(0.325, y_pos - 0.02, data$High_Beta_Desc[i], cex = 0.8, adj = 0.5)
-    
-    # Low Beta grade and description
-    grade_color <- get_grade_color(data$Low_Beta[i])
-    text(0.575, y_pos + 0.02, data$Low_Beta[i], cex = 1.4, font = 2, col = grade_color)
-    text(0.575, y_pos - 0.02, data$Low_Beta_Desc[i], cex = 0.8, adj = 0.5)
+wrap_text_lines <- function(text, max_chars = 25) {
+  # If text is short enough, return as-is
+  if(nchar(text) <= max_chars) {
+    return(text)
   }
+  
+  # Split into words
+  words <- strsplit(text, " ")[[1]]
+  lines <- character(0)
+  current_line <- ""
+  
+  for(word in words) {
+    # Check if adding this word would exceed the limit
+    test_line <- if(current_line == "") word else paste(current_line, word)
+    
+    if(nchar(test_line) <= max_chars) {
+      current_line <- test_line
+    } else {
+      # Current line is full, start a new line
+      if(current_line != "") {
+        lines <- c(lines, current_line)
+      }
+      current_line <- word
+    }
+  }
+  
+  # Don't forget the last line
+  if(current_line != "") {
+    lines <- c(lines, current_line)
+  }
+  
+  # Limit to maximum 3 lines to prevent overflow
+  if(length(lines) > 3) {
+    lines <- lines[1:3]
+    # Add "..." to indicate truncation
+    lines[3] <- paste(substr(lines[3], 1, max_chars-3), "...")
+  }
+  
+  return(lines)
 }
 
 # =============================================================================

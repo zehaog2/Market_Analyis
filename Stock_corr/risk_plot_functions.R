@@ -31,6 +31,7 @@ create_risk_matrix_plot <- function(all_results, icon_dir = "ticker_icons", use_
           Stock = stock,
           Benchmark = benchmark,
           Overall_Corr = result$overall$correlation,
+          #Beta = if(!is.null(result$overall$beta)) result$overall$beta else NA,
           Vol_Effect = vol_effect,
           Regime_Effect = regime_effect,
           stringsAsFactors = FALSE
@@ -62,11 +63,12 @@ create_risk_matrix_plot <- function(all_results, icon_dir = "ticker_icons", use_
       Vol_Effect = mean(stock_subset$Vol_Effect, na.rm = TRUE),
       Regime_Effect = mean(stock_subset$Regime_Effect, na.rm = TRUE),
       Overall_Corr = mean(abs(stock_subset$Overall_Corr), na.rm = TRUE),
+      Beta = mean(stock_subset$Beta, na.rm = TRUE),
       stringsAsFactors = FALSE
     ))
   }
   
-  # Fix common ticker symbol inconsistencies
+  # Fix common ticker symbol inconsistencies and add beta
   agg_data$Stock_Display <- agg_data$Stock
   
   # Create plot with ticker names only (no circles)

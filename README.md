@@ -4,6 +4,8 @@ I made this fear & greed tracker because tradingview's free plan doesn't have th
 
 ## 🌟 Features
 
+
+- Portfolio Correlation Matrix. (Jul 23, 2025) https://www.portfoliovisualizer.com/asset-correlations?s=y&sl=5Pc1Rn5TUqsb9Xl7tbDnLS
 - Smart Indicators**: Auto-detect support/resistance levels and inflection points
 - Multi-Level Analysis**: Analyze individual stocks, sectors, and industries
 

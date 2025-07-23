@@ -1,6 +1,8 @@
 # Portfolio enchancer
+- Narrow queries, mitigate risk. I hope you find anything helpful.
+
 ## Correlation Matrix
-- (Jul 23, 2025) https://www.portfoliovisualizer.com/asset-correlations?s=y&sl=5Pc1Rn5TUqsb9Xl7tbDnLS
+- (My porfolio as of Jul 23, 2025) https://www.portfoliovisualizer.com/asset-correlations?s=y&sl=5Pc1Rn5TUqsb9Xl7tbDnLS
 - Check for non-speculative assets
   
 ## USEFUL command lines
@@ -66,6 +68,7 @@ The sentiment score (0-100) is calculated using: (adjust weight to your own liki
 - Minor Optimizations
 - checking file structure
 - integrating custom database to stream queries
+- I might consider keeping a monthly portfolio update, to help prove if these codes are helpful or not. 
 
 ## Suggested usage
 -Not developed for day traders, option trading. Focused on growth stocks. Can always replace anchor "SPY" with your favorite ETF. Complement short to mid term investment strategies, narrow down queries & help risk management. 

@@ -7,40 +7,17 @@ Track sector price momentum with buy/sell signals, work well with looking at sec
 
 ![sector_industrials_enhanced](https://github.com/user-attachments/assets/9757b99c-0903-481e-8f17-18b9b647ec77)
 <img width="1851" alt="Screenshot 2025-06-17 at 11 42 12 AM" src="https://github.com/user-attachments/assets/c9c90459-302d-4376-9ef5-26c1a8b6be24" />
-[portfolio_correlation_matrix_3y_20250621.pdf](https://github.com/user-attachments/files/20847600/portfolio_correlation_matrix_3y_20250621.pdf)
-
-
-### Usage
-
-1. **Analyze Individual Stocks** (Interactive Mode):
-```bash
-python stock_fear_greed.py
+## USEFUL command lines
 ```
-Then enter tickers when prompted: `AAPL MSFT GOOGL NVDA`
-
-2. **Manage Your Portfolio**:
-```bash
-python portfolio_manager.py
-```
-
-3. **Analyze Your Portfolio's Sectors/Industries**:
-```bash
-python fear_greed_enhanced.py --portfolio
-```
-
-## 📖 Quick Start
-
-```bash
+python3 portfolio_manager.py
 # General charts based on portfolio (with different timeframe)
-python3 fear_greed_enhanced.py --portfolio
-python3 fear_greed_enhanced.py —days 90
 
-#Run Script for all sectors:
+Run Script for all sectors:
 python3 fear_greed_timeseries.py --sectors-only
 python3 fear_greed_timeseries.py --industries-only
 
-#news sentiment summary for portfolio
-python3 stock_scraper_upgraded.py
+Run Web scrape script: python3 stock_scraper_upgraded.py
+
 
 python3 sector_fear_greed_dashboard.py
 python3 sector_fear_greed_dashboard.py --continue-on-error
@@ -53,66 +30,17 @@ python industry_lookup_tool.py --search "software"
 # custom
 python industry_lookup_tool.py --industry "Banks" --days 90
 
+
+# single stock analysis:
+Rscript stock_corr_advanced.R 
+# portfolio analysis:
+Rscript stock_corr_advanced.R --batch config.json
+
+Run this always!:
+Rscript stock_corr_integrated.R --batch config.json 3 --advanced
 ```
 
-### Portfolio Management
-
-```bash
-# Interactive portfolio manager
-python portfolio_manager.py
-
-# examples:
-python portfolio_manager.py add AAPL MSFT
-python portfolio_manager.py remove AMZN
-python portfolio_manager.py list
-```
-
-## 📁 File Structure
-
-```
-fear-greed-tracker/
-├── stock_fear_greed.py       # Individual stock analysis
-├── portfolio_manager.py      # Portfolio management
-├── fear_greed_enhanced.py    # Sector/industry analysis
-├── fear_greed_timeseries.py  # Base analysis class
-├── stock_info_manager.py     # Stock data management
-├── config.json              # Your portfolio (auto-created)
-└── README.md                # This file
-
-Output folders:
-├── stock_fear_greed/        # Individual stock charts
-├── fear_greed_enhanced/     # Sector/industry charts
-└── stock_info_cache.json    # Cached stock data
-```
-## 🔧 Configuration
-
-### Customizing Analysis Periods
-
-Default is 180 days (6 months). You can adjust:
-```bash
-python stock_fear_greed.py AAPL --days 90    # 3 months
-python stock_fear_greed.py AAPL --days 365   # 1 year
-```
-
-### Watchlist Lookup
-
-Create a text file with one ticker per line:
-```
-# watchlist.txt
-AAPL
-MSFT
-GOOGL
-TSLA
-SPY
-```
-
-Then analyze all at once:
-```bash
-python stock_fear_greed.py --watchlist watchlist.txt
-```
-
-## 📈 Technical Details
-
+## 📈 Fear & Greed Details
 ### Maths
 
 The sentiment score (0-100) is calculated using: (adjust weight to your own liking please)
@@ -127,15 +55,13 @@ The sentiment score (0-100) is calculated using: (adjust weight to your own liki
 - **Sector ETFs**: SPDR Sector ETFs (XLK, XLF, XLV, etc.)
 - **Updates**: Real-time during market hours
 
-## Improvements I am working on
-
-Contributions are welcome! Please feel free to submit a Pull Request. Areas for improvement:
-- Integration of EMA and order blocks
-- Alternative data sources (X, meta API)
-- Reduce clutter on support / resistance
+## Improvements I might work on:
+- Cleaning up comments
+- Minor Optimizations
+- checking file structure
+- integrating custom database to stream queries
 
 ## Disclaimer
-
-This tool is for educational and informational purposes only. It is not financial advice. Do your own research... 
+This tool is for educational and speculative purposes only. It is not financial advice. Do your own research... 
 
 ---

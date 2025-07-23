@@ -71,7 +71,7 @@ The sentiment score (0-100) is calculated using: (adjust weight to your own liki
 - I might consider keeping a monthly portfolio update, to help prove if these codes are helpful or not. 
 
 ## Suggested usage
--Not developed for day traders, option trading. Focused on growth stocks. Can always replace anchor "SPY" with your favorite ETF. Complement short to mid term investment strategies, narrow down queries & help risk management. 
+-Not developed for day traders, option trading, or short-selling. Focus on the most basic: buying the stocks of growth companies. Can always replace anchor "SPY" with your favorite ETF. Complement short to mid term investment strategies, narrow down queries & help risk management. 
 
 ## Disclaimer
 This tool is for educational and speculative purposes only. It is not financial advice. Do your own research... 

@@ -1,4 +1,6 @@
-# 📊 Fear & Greed Tracker
+# Portfolio enchancer
+
+## 📊 Fear & Greed Tracker
 
 Track sector price momentum, work well with looking at sector ETF's momentum indicators side by side.
 

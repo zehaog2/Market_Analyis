@@ -74,10 +74,7 @@ The sentiment score (0-100) is calculated using: (adjust weight to your own liki
 -Not developed for day traders, option trading, or short-selling. Focus on the most basic: buying the stocks of growth companies. Can always replace anchor "SPY" with your favorite ETF. Complement short to mid term investment strategies, narrow down queries & help risk management. 
 
 ## Disclaimer
--This project is developed for educational and speculative purposes only. It is not intended to provide financial, investment, or trading advice. All analyses, tools, and results are for informational use only, and should not be relied upon for making investment decisions.
+-This project is developed for educational and speculative purposes only. It is not intended to provide financial, investment, or trading advice. All analyses, tools, and results are for informational use only, and should not be relied upon for making investment decisions. Always do your own research (DYOR) and consult with a licensed financial advisor before making any investment decisions. The author of this project, Henry, is not liable for any financial losses or damages incurred from the use of this code. This project is not affiliated with any brokerage, trading platform, or financial institution.
 
--Always do your own research (DYOR) and consult with a licensed financial advisor before making any investment decisions. The author of this project, Henry, is not liable for any financial losses or damages incurred from the use of this code.
-
--This project is not affiliated with any brokerage, trading platform, or financial institution.
-Licensed under the MIT License. See [LICENSE](./LICENSE) for details.
+-Licensed under the MIT License. See [LICENSE](./LICENSE) for details.
 ---

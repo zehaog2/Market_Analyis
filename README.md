@@ -35,13 +35,18 @@ Rscript stock_corr_advanced.R --batch config.json
 Run this always!:
 Rscript stock_corr_integrated.R --batch config.json 3 --advanced
 ```
+## Risk Analysis
+All files in R are dependent on each other. Check the function file for methodology, and my_strategy_analysis.pdf for a simple user guide.
+
 ## Fear & Greed Tracker
 Track sector price momentum with buy/sell signals, work well with looking at sector ETF's momentum indicators side by side.
 
 ![sector_industrials_enhanced](https://github.com/user-attachments/assets/9757b99c-0903-481e-8f17-18b9b647ec77)
 <img width="1851" alt="Screenshot 2025-06-17 at 11 42 12 AM" src="https://github.com/user-attachments/assets/c9c90459-302d-4376-9ef5-26c1a8b6be24" />
 
+
 ### 📈 Fear & Greed Details
+
 #### Maths
 
 The sentiment score (0-100) is calculated using: (adjust weight to your own liking please)

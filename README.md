@@ -1,12 +1,8 @@
 # Portfolio enchancer
-# Correlation Matrix
+## Correlation Matrix
 - (Jul 23, 2025) https://www.portfoliovisualizer.com/asset-correlations?s=y&sl=5Pc1Rn5TUqsb9Xl7tbDnLS
-- Check for non-speculative assets 
-## Fear & Greed Tracker
-Track sector price momentum with buy/sell signals, work well with looking at sector ETF's momentum indicators side by side.
-
-![sector_industrials_enhanced](https://github.com/user-attachments/assets/9757b99c-0903-481e-8f17-18b9b647ec77)
-<img width="1851" alt="Screenshot 2025-06-17 at 11 42 12 AM" src="https://github.com/user-attachments/assets/c9c90459-302d-4376-9ef5-26c1a8b6be24" />
+- Check for non-speculative assets
+  
 ## USEFUL command lines
 ```
 python3 portfolio_manager.py
@@ -39,9 +35,14 @@ Rscript stock_corr_advanced.R --batch config.json
 Run this always!:
 Rscript stock_corr_integrated.R --batch config.json 3 --advanced
 ```
+## Fear & Greed Tracker
+Track sector price momentum with buy/sell signals, work well with looking at sector ETF's momentum indicators side by side.
 
-## 📈 Fear & Greed Details
-### Maths
+![sector_industrials_enhanced](https://github.com/user-attachments/assets/9757b99c-0903-481e-8f17-18b9b647ec77)
+<img width="1851" alt="Screenshot 2025-06-17 at 11 42 12 AM" src="https://github.com/user-attachments/assets/c9c90459-302d-4376-9ef5-26c1a8b6be24" />
+
+### 📈 Fear & Greed Details
+#### Maths
 
 The sentiment score (0-100) is calculated using: (adjust weight to your own liking please)
 - **Price Momentum** (40%): Recent price performance
@@ -49,7 +50,7 @@ The sentiment score (0-100) is calculated using: (adjust weight to your own liki
 - **Volume Analysis** (20%): Volume vs average
 - **Volatility** (10%): Market volatility (inverse relationship)
 
-### Data Sources
+#### Data Sources
 
 - **Market Data**: Yahoo Finance API (yfinance)
 - **Sector ETFs**: SPDR Sector ETFs (XLK, XLF, XLV, etc.)

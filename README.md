@@ -1,15 +1,9 @@
 # Portfolio enchancer
 # Correlation Matrix
 - (Jul 23, 2025) https://www.portfoliovisualizer.com/asset-correlations?s=y&sl=5Pc1Rn5TUqsb9Xl7tbDnLS
-- Check for non-speculative (long-term) assets.
+- Check for non-speculative assets 
 ## Fear & Greed Tracker
 Track sector price momentum with buy/sell signals, work well with looking at sector ETF's momentum indicators side by side.
-
-## Features
-- Smart Indicators**: Auto-detect support/resistance levels and inflection points
-- Multi-Level Analysis**: Analyze individual stocks, sectors, and industries
-
-Sample outputs:
 ![sector_industrials_enhanced](https://github.com/user-attachments/assets/9757b99c-0903-481e-8f17-18b9b647ec77)
 <img width="1851" alt="Screenshot 2025-06-17 at 11 42 12 AM" src="https://github.com/user-attachments/assets/c9c90459-302d-4376-9ef5-26c1a8b6be24" />
 [portfolio_correlation_matrix_3y_20250621.pdf](https://github.com/user-attachments/files/20847600/portfolio_correlation_matrix_3y_20250621.pdf)

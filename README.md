@@ -36,7 +36,7 @@ Run this always!:
 Rscript stock_corr_integrated.R --batch config.json 3 --advanced
 ```
 ## Risk Analysis
-All files in R are dependent on each other. Check the function file for methodology, and my_strategy_analysis.pdf for a simple user guide.
+All files in R are dependent on each other. Check the function file for methadology, and my_strategy_analysis.pdf for a simple user guide.
 
 ## Fear & Greed Tracker
 Track sector price momentum with buy/sell signals, work well with looking at sector ETF's momentum indicators side by side.
@@ -66,6 +66,10 @@ The sentiment score (0-100) is calculated using: (adjust weight to your own liki
 - Minor Optimizations
 - checking file structure
 - integrating custom database to stream queries
+
+## Suggested usage
+
+### Not developed for day traders, option trading. Focused on growth stocks. Can always replace anchor "SPY" with your favorite ETF. Complement short to mid term investment strategies, narrow down queries & help risk management. 
 
 ## Disclaimer
 This tool is for educational and speculative purposes only. It is not financial advice. Do your own research... 

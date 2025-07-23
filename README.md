@@ -1,6 +1,6 @@
 # 📊 Fear & Greed Tracker
 
-I made this fear & greed tracker because tradingview's free plan doesn't have this. Also added some scripts for specific lookups.
+Track sector price momentum, work well with looking at sector ETF's momentum indicators side by side.
 
 ## 🌟 Features
 

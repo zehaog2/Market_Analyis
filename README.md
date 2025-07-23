@@ -38,7 +38,7 @@ Run this always!:
 Rscript stock_corr_integrated.R --batch config.json 3 --advanced
 ```
 ## Risk Analysis
-All files in R are dependent on each other. Check the function file for methadology, and my_strategy_analysis.pdf for a simple user guide.
+All files in R are dependent on each other. Check stock_corr, where my_strategy_analysis.pdf guides the usage.
 
 ## Fear & Greed Tracker
 Track sector price momentum with buy/sell signals, work well with looking at sector ETF's momentum indicators side by side.

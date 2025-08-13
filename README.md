@@ -1,10 +1,19 @@
 # Portfolio enchancer
 - Narrow queries, mitigate risk. I hope you find anything helpful. Read the disclaimer...
+- Portfolio OPening Date: Nov 2025. As of Aug 12th, YoY Yield: 30%
+
 
 ## Correlation Matrix
 - (My porfolio as of Jul 23, 2025) https://www.portfoliovisualizer.com/asset-correlations?s=y&sl=5Pc1Rn5TUqsb9Xl7tbDnLS
 - Check for non-speculative assets
-  
+
+## Resources
+https://www.insiderdashboard.com/?tab=insider-trading-buys-sells
+https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html
+https://earningshub.com/earnings-calendar/this-month
+https://www.capitoltrades.com/trades?politician=P000197
+
+
 ## USEFUL command lines
 ```
 python3 portfolio_manager.py

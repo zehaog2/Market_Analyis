@@ -8,10 +8,10 @@
 - Check for non-speculative assets
 
 ## Resources
-https://www.insiderdashboard.com/?tab=insider-trading-buys-sells
-https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html
-https://earningshub.com/earnings-calendar/this-month
-https://www.capitoltrades.com/trades?politician=P000197
+- https://www.insiderdashboard.com/?tab=insider-trading-buys-sells
+- https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html
+- https://earningshub.com/earnings-calendar/this-month
+- https://www.capitoltrades.com/trades?politician=P000197
 
 
 ## USEFUL command lines

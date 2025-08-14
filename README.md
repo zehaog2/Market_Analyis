@@ -4,10 +4,10 @@
 
 
 ## Portfolio
-- As of Aug 13th, 2025
-- AMZN COHU CROX EAF EVTL FTK GFS GLXY GME HYLN INTC RDW SIRI SLV SVCO WRD
-- Cash position: 18.5%
-- Opening Date: Nov 2024. As of Aug 13th, 2025, YoY Yield: 21%
+- As of Aug 14th, 2025
+- AMZN CAVA STGW EAF EVTL FTK GFS GLXY GME INTC RDW SIRI SLV SVCO WRD
+- Cash position: 19.6%
+- - Opening Date: Nov 2024. As of Aug 8th, 2025, YoY Yield: 29%
 
 ## Resources
 - https://www.insiderdashboard.com/?tab=insider-trading-buys-sells

@@ -1,7 +1,6 @@
 # Intro
 - All of the results & resources here are to help myself in narrowing queries and mitigating risk all based on techincal analysis. DM me if you are interested in how I do my techincals. Please read the disclaimer.
-- Portfolio opening Date: Nov 2024. As of Aug 13th, 2025, YoY Yield: 21%
-- I hope you find anything helpful.
+- I hope you find anything here helpful.
 
 
 ## Portfolio

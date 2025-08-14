@@ -4,7 +4,7 @@
 
 
 ## Portfolio
-- as of Aug 13th, 2025
+- As of Aug 13th, 2025
 - AMZN COHU CROX EAF EVTL FTK GFS GLXY GME HYLN INTC RDW SIRI SLV SVCO WRD
 - Cash position: 18.5%
 

@@ -1,12 +1,14 @@
-# Portfolio enchancer
-- Narrow queries, mitigate risk. I hope you find anything helpful. All of the results & resources here are to help enhance my risk assessment and stock querying all based on techincal analysis. DM me if you are interested in how I do my techincals. Please read the disclaimer.
+# Intro
+- All of the results & resources here are to help myself in narrowing queries and mitigating risk all based on techincal analysis. DM me if you are interested in how I do my techincals. Please read the disclaimer.
 - Portfolio opening Date: Nov 2024. As of Aug 13th, 2025, YoY Yield: 21%
+- I hope you find anything helpful.
 
 
 ## Portfolio
 - As of Aug 13th, 2025
 - AMZN COHU CROX EAF EVTL FTK GFS GLXY GME HYLN INTC RDW SIRI SLV SVCO WRD
 - Cash position: 18.5%
+- Opening Date: Nov 2024. As of Aug 13th, 2025, YoY Yield: 21%
 
 ## Resources
 - https://www.insiderdashboard.com/?tab=insider-trading-buys-sells

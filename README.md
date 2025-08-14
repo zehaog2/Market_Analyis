@@ -1,6 +1,6 @@
 # Portfolio enchancer
-- Narrow queries, mitigate risk. I hope you find anything helpful. All of the results & resources here are to help enhance my risk assessment and stock querying all based on techincal analysis. Read the disclaimer...
-- Portfolio OPening Date: Nov 2024. As of Aug 13th, 2025, YoY Yield: 21%
+- Narrow queries, mitigate risk. I hope you find anything helpful. All of the results & resources here are to help enhance my risk assessment and stock querying all based on techincal analysis. Please read the disclaimer.
+- Portfolio opening Date: Nov 2024. As of Aug 13th, 2025, YoY Yield: 21%
 
 
 ## Portfolio

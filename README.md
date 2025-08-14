@@ -1,17 +1,19 @@
 # Portfolio enchancer
-- Narrow queries, mitigate risk. I hope you find anything helpful. Read the disclaimer...
-- Portfolio OPening Date: Nov 2025. As of Aug 12th, YoY Yield: 30%
+- Narrow queries, mitigate risk. I hope you find anything helpful. All of the results & resources here are to help enhance my risk assessment and stock querying all based on techincal analysis. Read the disclaimer...
+- Portfolio OPening Date: Nov 2024. As of Aug 13th, 2025, YoY Yield: 21%
 
 
-## Correlation Matrix
-- (My porfolio as of Jul 23, 2025) https://www.portfoliovisualizer.com/asset-correlations?s=y&sl=5Pc1Rn5TUqsb9Xl7tbDnLS
-- Check for non-speculative assets
+## Portfolio
+- as of Aug 13th, 2025
+- AMZN COHU CROX EAF EVTL FTK GFS GLXY GME HYLN INTC RDW SIRI SLV SVCO WRD
+- Cash position: 18.5%
 
 ## Resources
 - https://www.insiderdashboard.com/?tab=insider-trading-buys-sells
 - https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html
 - https://earningshub.com/earnings-calendar/this-month
 - https://www.capitoltrades.com/trades?politician=P000197
+- https://www.portfoliovisualizer.com/asset-correlations?s=y&sl=5Pc1Rn5TUqsb9Xl7tbDnLS
 
 
 ## USEFUL command lines

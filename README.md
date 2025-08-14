@@ -76,10 +76,7 @@ The sentiment score (0-100) is calculated using: (adjust weight to your own liki
 - **Updates**: Real-time during market hours
 
 ## Improvements I might work on:
-- Cleaning up comments
-- Minor Optimizations
-- checking file structure
-- integrating custom database to stream queries
+- I am considering setting up a dashboard to check my historical trades, aka visualizing my glory and failures.
 
 ## Suggested usage
 -Not developed for day traders, option trading, or short-selling. Focus on the most basic: buying the stocks of growth companies. Can always replace anchor "SPY" with your favorite ETF. Complement short to mid term investment strategies, narrow down queries & help risk management. 

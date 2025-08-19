@@ -4,9 +4,10 @@
 
 
 ## Portfolio
-- As of Aug 18th, 2025
-- - AMZN CMG STGW EAF GFS GLXY GME INTC RDW SIRI SLV SVCO WRD PRMB
-- - Cash position: 15%
+- As of Aug 19th, 2025
+- - Orderded by Market Value
+- - - GME SLV INTC GLXY SIRI AMZN PRMB SVCO STGW WRD GFS RDW
+- - Cash position: 12%
 - Opening Date: Nov 2024. As of Aug 8th, 2025, YoY Yield: 29%
 
 ## Resources

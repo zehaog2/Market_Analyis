@@ -8,7 +8,8 @@
 - - Ordered by Market Value
 - - - GME SLV INTC GLXY SIRI AMZN PRMB SVCO STGW WRD GFS RDW
 - - Cash position: 12%
-- Opening Date: Nov 2024. As of Aug 8th, 2025, YoY Yield: 29%
+- Opening Date: Nov 2024.
+- As of Aug 8th, 2025, YoY Yield: 29%
 
 ## Resources
 - https://www.insiderdashboard.com/?tab=insider-trading-buys-sells

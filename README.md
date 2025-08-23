@@ -9,7 +9,7 @@
 - - Ordered by Market Value
 - - - SLV GME GLXY INTC SIRI AMZN STGW GFS WRD CMG PRMB RDW PRGO
 - - Cash position: 10.23%
-- As of Aug 8th, 2025, YoY Yield: 29%
+- 2025 YoY Yield: 29%
 
 ## Resources
 - https://www.insiderdashboard.com/?tab=insider-trading-buys-sells

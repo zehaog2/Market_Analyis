@@ -7,8 +7,8 @@
 - Opening Date: Nov 2024.
 - As of Aug 23rd, 2025
 - - Ordered by Market Value
-- - - SLV GME GLXY INTC SIRI AMZN STGW GFS WRD CMG PRMB RDW PRGO
-- - Cash position: 10.23%
+- - - GME SLV GLXY INTC SIRI AMZN GFS WRD RDW RXST
+- - Cash position: 13.1%
 - 2025 YoY Yield: 29%
 
 ## Resources

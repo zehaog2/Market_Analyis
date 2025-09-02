@@ -5,11 +5,12 @@
 
 ## Portfolio
 - Opening Date: Nov 2024.
-- As of Aug 23rd, 2025
+- As of Sep 2nd, 2025
 - - Ordered by Market Value
 - - - GME SLV GLXY INTC SIRI AMZN GFS WRD RDW RXST
-- - Cash position: 13.1%
-- 2025 YoY Yield: 29%
+    - I have 40% of my portfolio in gamestop and silver, because I believe their current setup, the macro economic setup, are worth their current risks.
+- - Cash position: 10.53%
+- 2025 YoY Yield: 27%
 
 ## Resources
 - https://www.insiderdashboard.com/?tab=insider-trading-buys-sells

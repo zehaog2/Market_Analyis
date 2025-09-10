@@ -10,7 +10,7 @@
 - - - GME SLV INTC SIRI AMC JOBY GFS WRD GLXY RDW FVRR
     - 40% of my portfolio are gamestop and silver
 - - Cash position: 10.27%
-- 2025 YoY Yield: 29%
+- 2025 YoY Yield: 32%
 
 ## Resources
 - https://www.insiderdashboard.com/?tab=insider-trading-buys-sells

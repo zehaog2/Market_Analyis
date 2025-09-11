@@ -5,7 +5,7 @@
 
 ## Portfolio
 - Opening Date: Nov 2024.
-- As of Sep 2nd, 2025
+- As of Sep 11th, 2025
 - - Ordered by Market Value
 - - - GME SLV INTC SIRI JOBY KO WRD GFS GLXY RDW FVRR CC FLR
     - 40% of my portfolio are comprised of GME & SLV. Entered 5 new positions on Sep 11th. 

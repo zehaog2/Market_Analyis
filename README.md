@@ -1,5 +1,5 @@
 # Intro
-- All of the results & resources here are to help myself in narrowing queries and mitigating risk all based on techincal analysis. DM me if you are interested in how I do my techincals. Please read the disclaimer.
+- All of the results & resources here are to help myself in narrowing queries and mitigating risk all based on techincal analysis. Please read the disclaimer.
 - I hope you find anything here helpful.
 
 
@@ -7,7 +7,7 @@
 - Opening Date: Nov 2024.
 - As of Sep 11th, 2025
 - - Ordered by Market Value
-- - - GME SLV INTC SIRI JOBY KO WRD GFS GLXY RDW FVRR CC FLR
+- - - GME SLV INTC SIRI JOBY KO WRD GFS GLXY CC RDW FLR
     - 40% of my portfolio are comprised of GME & SLV. Entered 5 new positions on Sep 11th. 
 - - Cash position: 10.14%
 - 2025 YoY Yield: 32%

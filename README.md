@@ -4,12 +4,12 @@
 
 
 ## Portfolio
-- Opening Date: Nov 2024.
-- As of Sep 11th, 2025
+- Account Opening: Nov 2024.
+- As of Sep 15th, 2025
 - - Ordered by Market Value
-- - - GME SLV INTC SIRI JOBY KO WRD GFS GLXY CC RDW FLR
-    - 40% of my portfolio are comprised of GME & SLV. Entered 5 new positions on Sep 11th. 
-- - Cash position: 10.14%
+- - - GME SLV INTC SIRI WRD JOBY KO GFS GLXY FLR CC RDW NVTS NEXT
+    - Rebalaned positions on Sep 15th
+- - Cash position: 7.6%
 - 2025 YoY Yield: 32%
 
 ## Resources

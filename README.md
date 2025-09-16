@@ -7,10 +7,10 @@
 - Account Opening: Nov 2024.
 - As of Sep 15th, 2025
 - - Ordered by Market Value
-- - - GME SLV INTC SIRI WRD JOBY KO GFS GLXY FLR CC RDW NVTS NEXT
-    - Rebalaned positions on Sep 15th
-- - Cash position: 7.6%
-- 2025 YoY Yield: 32%
+- - - GME SLV INTC GLXY JOBY CC RDW KO GFS FLR WRD SILJ OPEN NEXT
+    - Rebalaned positions on Sep 16th
+- - Cash position: 22.7%
+- 2025 YoY Yield: 27.1%
 
 ## Resources
 - https://www.insiderdashboard.com/?tab=insider-trading-buys-sells

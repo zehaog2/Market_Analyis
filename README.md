@@ -5,12 +5,12 @@
 
 ## Portfolio
 - Account Opening: Nov 2024.
-- As of Sep 19th, 2025
+- As of Sep 18th, 2025
 - - Ordered by Market Value
 - - - GME INTC SLV GLXY JOBY CC RDW KO GFS FLR WRD SILJ OPEN NEXT
     - Rebalaned positions on Sep 16th
 - - Cash position: 22.7%
-- 2025 YoY Yield: 230.18%
+- 2025 YoY Yield: 30.18%
 
 ## Resources
 - https://www.insiderdashboard.com/?tab=insider-trading-buys-sells

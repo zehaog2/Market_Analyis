@@ -5,8 +5,8 @@
 
 ## Portfolio
 - Account Opening: Nov 2024.
-- As of 2025, Sep 19th:
-- - GME INTC CC SILJ KO ONDS FLR NVDA AMC OPEN NEXY WRD HYLN GLXY
+- As of 2025, Sep 19th: 
+- - GME INTC CC SILJ KO ONDS FLR NVDA AMC OPEN NEXY WRD HYLN GLXY (ordered by largest to smallest in total market value)
 - - Cash position: 17.12%
 - 2025 YoY Yield: 30.46%
 
